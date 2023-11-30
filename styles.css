@@ -1,17 +1,98 @@
 /* styles.css */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  .movies {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .movie {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    width: 200px;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Estilos para a barra de navegação */
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: right;
+  justify-content: right; /* Centraliza os itens na barra de navegação */
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: right; /* Alinha os links ao centro */
+}
+
+.nav-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.nav-links li:last-child {
+  margin-right: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Restante dos estilos */
+
+
+
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.movie {
+  margin-top: 15px;
+  width: calc(33.33% - 20px); /* Largura de cada filme (ajuste conforme necessário) */
+  margin-bottom: 20px; /* Espaçamento inferior entre os filmes */
+  box-sizing: border-box;
+  border: 2px solid #000; /* Adiciona uma borda preta de 2px ao redor do filme */
+  padding: 10px; /* Adiciona um preenchimento interno de 10px */
+  /* Outros estilos conforme desejado */
+}
+
+
+.movie:hover {
+  transform: scale(1.05);
+}
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribui os filmes igualmente nas linhas */
+}
+
+/* Adicione estilos para a classe .movie-poster */
+.movie-poster {
+  max-width: 150px; /* Defina o tamanho máximo desejado para a largura da imagem */
+  height: auto; /* Mantém a proporção da imagem */
+  border: 1px solid #ccc; /* Adicione uma borda para melhorar a visualização */
+}
+
+

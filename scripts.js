@@ -1,38 +1,144 @@
-// scripts.js
-// Dados simulados de filmes
-const moviesData = [
-    { title: 'Filme A', genre: 'action', description: 'Descrição do Filme A.' },
-    { title: 'Filme B', genre: 'drama', description: 'Descrição do Filme B.' },
-    { title: 'Filme C', genre: 'comedy', description: 'Descrição do Filme C.' },
-    // Adicione mais filmes conforme necessário
-  ];
-  
-  // Função para exibir filmes com base no gênero selecionado
-  function showMovies(genre) {
+const apiKey = '82c69a95563baea5f245619c3975f623';
+
+async function getGenresList() {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
+    const data = await response.json();
+    return data.genres || [];
+  } catch (error) {
+    console.error('Erro ao buscar lista de gêneros:', error);
+    return [];
+  }
+}
+
+async function showGenresDropdown() {
+  try {
+    const genres = await getGenresList();
+    const genreDropdown = document.getElementById('genre');
+
+    genres.forEach(genre => {
+      const option = document.createElement('option');
+      option.value = genre.id;
+      option.textContent = genre.name;
+      genreDropdown.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Erro ao exibir opções de gênero:', error);
+  }
+}
+
+showGenresDropdown();
+
+async function getMoviesByGenre(genre) {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre}`);
+    const data = await response.json();
+    return data.results || [];
+  } catch (error) {
+    console.error('Erro ao buscar filmes:', error);
+    return [];
+  }
+}
+
+async function getMovieGenres(genreIds) {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
+    const data = await response.json();
+
+    const genres = genreIds.map(genreId => data.genres.find(genre => genre.id === genreId));
+    return genres.filter(Boolean); // Filtrar e remover valores nulos ou indefinidos
+  } catch (error) {
+    console.error('Erro ao buscar gêneros:', error);
+    return [];
+  }
+}
+
+// ...
+
+// Associar a função ao evento de alteração do menu suspenso
+const genreDropdown = document.getElementById('genre');
+genreDropdown.addEventListener('change', function() {
+  const selectedGenre = this.value; // Obtém o valor selecionado
+  showMovies(selectedGenre); // Chama a função showMovies com o valor selecionado
+});
+
+showGenresDropdown(); // Exibe os gêneros no menu suspenso ao carregar a página
+showMovies('all'); // Exibe todos os filmes inicialmente
+
+// ...
+
+async function showMovies(genreId) {
+  try {
+    const movies = await getMoviesByGenre(genreId);
     const movieList = document.getElementById('movieList');
     let moviesHTML = '';
-  
-    moviesData.forEach(movie => {
-      if (genre === 'all' || movie.genre === genre) {
+
+    let moviesCounter = 0;
+
+    for (const movie of movies) {
+      if (genreId === 'all' || movie.genre_ids.includes(parseInt(genreId))) {
+        const genres = await getMovieGenres(movie.genre_ids);
+        moviesCounter++;
+
+        // Constrói o URL completo da imagem usando o poster_path da TMDB
+        const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+
         moviesHTML += `
           <div class="movie">
-            <h3>${movie.title}</h3>
-            <p><strong>Gênero:</strong> ${movie.genre}</p>
-            <p>${movie.description}</p>
+            <img src="${imageUrl}" alt="${movie.title}" class="movie-poster">
+            <div class="movie-details">
+              <h3>${movie.title}</h3>
+              <p><strong>Gênero:</strong> ${genres.map(genre => genre.name).join(', ') || 'Gênero não especificado'}</p>
+              <p>${movie.overview || 'Descrição não disponível'}</p>
+            </div>
           </div>
         `;
+
+        if (moviesCounter % 3 === 0) {
+          moviesHTML += '<div style="flex-basis: 100%; height: 0;"></div>';
+        }
       }
-    });
-  
+    }
+
     movieList.innerHTML = moviesHTML;
+  } catch (error) {
+    console.error('Erro ao exibir filmes:', error);
   }
-  
-  // Event listener para alterações na seleção de gênero
-  document.getElementById('genre').addEventListener('change', function() {
-    const selectedGenre = this.value;
-    showMovies(selectedGenre);
-  });
-  
-  // Exibição inicial de todos os filmes
-  showMovies('all');
-  
+}
+
+// Função para escolher e exibir um filme aleatório usando os dados da API
+async function getRandomMovie(genre) {
+  try {
+    const movies = await getMoviesByGenre(genre);
+
+    const randomIndex = Math.floor(Math.random() * movies.length);
+    const randomMovie = movies[randomIndex];
+    
+    displayRandomMovie(randomMovie);
+  } catch (error) {
+    console.error('Erro ao buscar filme aleatório:', error);
+  }
+}
+
+// Função para exibir o filme aleatório selecionado
+function displayRandomMovie(movie) {
+  const randomMovieResult = document.getElementById('randomMovieResult');
+  randomMovieResult.innerHTML = `
+    <h2>Filme Selecionado:</h2>
+    <div class="movie">
+      <h3>${movie.title}</h3>
+      <p><strong>Gênero:</strong> ${movie.genre}</p>
+      <p>${movie.description}</p>
+    </div>
+  `;
+}
+
+// Associar a função ao botão "Filme Aleatório"
+const randomMovieButton = document.getElementById('randomMovieButton');
+randomMovieButton.addEventListener('click', function() {
+  const selectedGenre = document.getElementById('genre').value;
+  getRandomMovie(selectedGenre);
+});
+
+// Exibição inicial de todos os filmes
+showMovies('all');
