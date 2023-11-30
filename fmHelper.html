@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Informações da Liga</title>
+  <!-- Adicione seu arquivo de estilos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#leagues">Ligas</a></li>
+        <li><a href="#about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <h1 class="logo">Decide Genius</h1>
+    <h2>Explore informações sobre ligas esportivas e equipes!</h2>
+  </header>
+
+  <main>
+    <section id="leagues">
+      <h2>Escolha uma Liga</h2>
+      <select id="leagueSelect">
+        <!-- Opções de ligas existentes -->
+      </select>
+      <select id="divisoesSelect">
+        <option value="">Selecione a liga primeiro</option>
+      </select>
+    </section>
+
+    <section id="teams">
+      <h2>Equipes da Liga Selecionada</h2>
+      <div class="teams-container" id="teamsList">
+        <!-- Aqui é onde as equipes serão exibidas -->
+      </div>
+      <button id="randomTeamButton">Equipe Aleatória:</button>
+      <div id="randomTeamResult"></div>
+    </section>
+  </main>
+
+  <!-- Importe seu arquivo de script corretamente -->
+  <script src="scriptsFmHelper.js"></script>
+</body>
+</html>

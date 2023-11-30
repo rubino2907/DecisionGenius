@@ -73,19 +73,15 @@ async function showMovies(genreId) {
     const movieList = document.getElementById('movieList');
     let moviesHTML = '';
 
-    let moviesCounter = 0;
-
     for (const movie of movies) {
       if (genreId === 'all' || movie.genre_ids.includes(parseInt(genreId))) {
         const genres = await getMovieGenres(movie.genre_ids);
-        moviesCounter++;
 
-        // Constrói o URL completo da imagem usando o poster_path da TMDB
-        const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        const imageUrl = `https://image.tmdb.org/t/p/w300${movie.poster_path}`;
 
         moviesHTML += `
           <div class="movie">
-            <img src="${imageUrl}" alt="${movie.title}" class="movie-poster">
+            <img src="${imageUrl}" alt="${movie.title}">
             <div class="movie-details">
               <h3>${movie.title}</h3>
               <p><strong>Gênero:</strong> ${genres.map(genre => genre.name).join(', ') || 'Gênero não especificado'}</p>
@@ -93,10 +89,6 @@ async function showMovies(genreId) {
             </div>
           </div>
         `;
-
-        if (moviesCounter % 3 === 0) {
-          moviesHTML += '<div style="flex-basis: 100%; height: 0;"></div>';
-        }
       }
     }
 
@@ -106,7 +98,9 @@ async function showMovies(genreId) {
   }
 }
 
-// ... código anterior ...
+// ...
+
+
 
 // Função para obter um filme aleatório com base no gênero selecionado
 async function getRandomMovie(genre) {
@@ -132,7 +126,7 @@ async function displayRandomMovie(movie) {
   
     randomMovieResult.innerHTML = `
       <h2>Filme Selecionado:</h2>
-      <div class="movie">
+      <div class="random-movie">
         <img src="${imageUrl}" alt="${movie.title}" class="movie-poster">
         <div class="movie-details">
           <h3>${movie.title}</h3>
@@ -155,6 +149,4 @@ randomMovieButton.addEventListener('click', function() {
   getRandomMovie(selectedGenre); // Chamar a função getRandomMovie com o gênero selecionado
 });
 
-// Exibição inicial de todos os filmes
-showMovies('all');
 

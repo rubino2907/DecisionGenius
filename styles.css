@@ -1,35 +1,71 @@
-/* styles.css */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+/* Estilização do botão "Filme Aleatório" */
+button#randomMovieButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ccc;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+
+button#randomMovieButton:hover {
+  background-color: #e68a00;
+}
+
+/* Estilos para o resultado do filme aleatório */
+#randomMovieResult {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Estilização do seletor de gênero */
+label[for="genre"] {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+select#genre {
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 20px;
+  display: block;
 }
 
 /* Estilos para a barra de navegação */
 nav {
   background-color: #333;
   color: #fff;
-  padding: 10px 0;
+  padding: 15px 0;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  align-items: right;
-  justify-content: right; /* Centraliza os itens na barra de navegação */
+  align-items: center;
+  justify-content: space-between; /* Centraliza os itens na barra de navegação */
 }
 
 .nav-links {
   list-style: none;
   margin: 0;
   padding: 0;
-  text-align: right; /* Alinha os links ao centro */
+  display: flex;
+  align-items: center;
 }
 
 .nav-links li {
-  display: inline;
   margin-right: 20px;
 }
 
@@ -40,6 +76,7 @@ nav {
 .nav-links a {
   text-decoration: none;
   color: #fff;
+  font-size: 18px;
 }
 
 /* Restante dos estilos */
@@ -67,32 +104,93 @@ label {
   margin-bottom: 10px;
 }
 
-.movie {
-  margin-top: 15px;
-  width: calc(33.33% - 20px); /* Largura de cada filme (ajuste conforme necessário) */
-  margin-bottom: 20px; /* Espaçamento inferior entre os filmes */
-  box-sizing: border-box;
-  border: 2px solid #000; /* Adiciona uma borda preta de 2px ao redor do filme */
-  padding: 10px; /* Adiciona um preenchimento interno de 10px */
-  /* Outros estilos conforme desejado */
-}
-
-
-.movie:hover {
-  transform: scale(1.05);
-}
-
+/* ... */
 .movies-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Distribui os filmes igualmente nas linhas */
+  margin-top: 20px;
+  gap: 20px;
+  justify-content: flex-start;
 }
 
-/* Adicione estilos para a classe .movie-poster */
-.movie-poster {
-  max-width: 150px; /* Defina o tamanho máximo desejado para a largura da imagem */
-  height: auto; /* Mantém a proporção da imagem */
-  border: 1px solid #ccc; /* Adicione uma borda para melhorar a visualização */
+.movie {
+  flex: 0 0 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
+.movie img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.movie-details {
+  margin-top: 10px;
+}
+
+.random-movie {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.random-movie .movie-details h3 {
+  font-weight: bold; /* Mantém o título do filme em negrito */
+}
+
+.random-movie .movie-details p {
+  font-weight: normal; /* Remove o negrito do restante do texto */
+}
+
+.random-movie .movie-poster {
+  max-width: 300px; /* Define a largura máxima da imagem */
+  height: auto; /* Garante que a altura seja ajustada proporcionalmente */
+  display: block; /* Remove o espaçamento adicional ao redor da imagem */
+  margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Adicione ao seu arquivo styles.css */
+
+.teams-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.team {
+  flex: 0 0 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.team img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #ddd;
+}
+
+.team-details {
+  padding: 10px;
+}
+
+.team-details h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.team-details p {
+  margin: 0;
+}
+
+/* Estilos para o container da equipe aleatória */
+#randomTeamResult {
+  margin-top: 20px; /* Defina a margem superior desejada */
+}
 
