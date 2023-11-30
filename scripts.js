@@ -106,7 +106,9 @@ async function showMovies(genreId) {
   }
 }
 
-// Função para escolher e exibir um filme aleatório usando os dados da API
+// ... código anterior ...
+
+// Função para obter um filme aleatório com base no gênero selecionado
 async function getRandomMovie(genre) {
   try {
     const movies = await getMoviesByGenre(genre);
@@ -121,24 +123,38 @@ async function getRandomMovie(genre) {
 }
 
 // Função para exibir o filme aleatório selecionado
-function displayRandomMovie(movie) {
-  const randomMovieResult = document.getElementById('randomMovieResult');
-  randomMovieResult.innerHTML = `
-    <h2>Filme Selecionado:</h2>
-    <div class="movie">
-      <h3>${movie.title}</h3>
-      <p><strong>Gênero:</strong> ${movie.genre}</p>
-      <p>${movie.description}</p>
-    </div>
-  `;
+async function displayRandomMovie(movie) {
+  try {
+    const randomMovieResult = document.getElementById('randomMovieResult');
+    const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  
+    const genres = await getMovieGenres(movie.genre_ids);
+  
+    randomMovieResult.innerHTML = `
+      <h2>Filme Selecionado:</h2>
+      <div class="movie">
+        <img src="${imageUrl}" alt="${movie.title}" class="movie-poster">
+        <div class="movie-details">
+          <h3>${movie.title}</h3>
+          <p><strong>Gênero:</strong> ${genres.map(genre => genre.name).join(', ') || 'Gênero não especificado'}</p>
+          <p>${movie.overview || 'Descrição não disponível'}</p>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    console.error('Erro ao exibir filme aleatório:', error);
+  }
 }
+
+
 
 // Associar a função ao botão "Filme Aleatório"
 const randomMovieButton = document.getElementById('randomMovieButton');
 randomMovieButton.addEventListener('click', function() {
   const selectedGenre = document.getElementById('genre').value;
-  getRandomMovie(selectedGenre);
+  getRandomMovie(selectedGenre); // Chamar a função getRandomMovie com o gênero selecionado
 });
 
 // Exibição inicial de todos os filmes
 showMovies('all');
+
