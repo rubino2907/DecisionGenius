@@ -196,15 +196,6 @@ button#randomMovieButton {
   }
   
 /* /styles.css */
-
-/* Estilos para a caixa que envolve os elementos */
-.container-box {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    width: 300px; /* Ajuste a largura conforme necessário */
-    margin: 20px auto; /* Centraliza a caixa horizontalmente */
-  }
   
   /* Estilos para os inputs */
   input[type="text"],
@@ -235,14 +226,22 @@ button#randomMovieButton {
   }
 /* /styles.css */
 
-/* Estilos para a caixa que envolve os elementos */
-.container-box {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    width: 300px; /* Ajuste a largura conforme necessário */
-    margin: 20px auto; /* Centraliza a caixa horizontalmente */
-  }
+
+/* Novo estilo para o layout lado a lado */
+.form-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  margin-top: 20px;
+}
+.form-box {
+  width: 250px; /* Largura das caixas dos formulários */
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 0 10px; /* Espaçamento entre as caixas */
+}
+.form-box h3 {
+  margin-top: 0;
+}
   
   /* Estilos para os inputs */
   input[type="text"],
@@ -272,3 +271,24 @@ button#randomMovieButton {
     background-color: #45a049;
   }
     
+  select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none; /* Remove a aparência padrão do sistema */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Adiciona uma seta personalizada */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Define a largura do select */
+    margin-bottom: 10px;
+  }
+
+  /* Estilizando as opções do select */
+  select option {
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }

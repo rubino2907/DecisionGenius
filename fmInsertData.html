@@ -25,32 +25,104 @@
   </header>
 
   <div class="container-box">
-    <label> LeagueName: <input type="text" class="LeagueName" /> </label>
-    <label> NumDivisões: <input type="number" class="NumDivisoes" /> </label>
-    <button>Send Data</button>
+    <!-- Caixa para Inserir Liga -->
+   <!-- Novo layout para os formulários -->
+   <div class="form-container">
+    <!-- Caixa para Inserir Liga -->
+    <div class="form-box">
+      <h3>Inserir Liga</h3>
+      <form id="inserirLeaguesForm" method="POST" action="/inserirDataLeagues">
+        <label> LeagueName: <input type="text" class="LeagueName" id="nomeliga" name="nomeliga" required/> </label>
+        <button>Send Data</button>
+      </form>
+    </div>
+
+    <!-- Caixa para Inserir Divisão -->
+    <div class="form-box">
+      <h3>Inserir Divisão</h3>
+      <form id="inserirDivisaoForm" method="POST" action="/inserirDataDivisao">
+        <label>Todas as Ligas:</label>
+        <select id="ligas">
+          <option>Ligas</option>
+          <!-- Opções de gênero carregadas dinamicamente -->
+        </select>
+        <label> DivisionName: <input type="text" class="DivisionName" id="nomedivisao" name="nomedivisao" required/> </label>
+        <button>Send Data</button>
+      </form>
+    </div>
+
+    <!-- Caixa para Inserir Clube -->
+    <div class="form-box">
+      <h3>Inserir Clube</h3>
+      <form id="inserirClubeForm" method="POST" action="/inserirDataClube">
+        <label> ClubName: <input type="text" class="ClubName" id="nomeclube" name="nomeclube" required/> </label>
+        <button>Send Data</button>
+      </form>
+    </div>
   </div>
-    
-  <script>
-    var myLeague = document.querySelector(".LeagueName");
-var myNumDivisoes = document.querySelector(".NumDivisoes");
-var button = document.querySelector("button");
+</div>
 
-button.addEventListener("click", () => {
-  var obj = {
-    leagueName: myLeague.value,
-    numDivisoes: myNumDivisoes.value
-  };
+<script>
+  // Função para preencher o select com as ligas
+  async function carregarLigas() {
+  const selectElement = document.getElementById('ligas');
 
-  fetch("/createLeague", {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify(obj)
+  try {
+    const response = await fetch('http://127.0.0.1:3000/ligas');
+    const data = await response.json();
+
+    selectElement.innerHTML = '';
+
+    data.ligas.forEach(liga => {
+    const option = document.createElement('option');
+    option.value = liga.LigaID; // Use a propriedade correta do ID da liga
+    option.textContent = liga.NomeLiga; // Use a propriedade correta do nome da liga
+    selectElement.appendChild(option);
   });
-});
 
-  </script>
+  } catch (error) {
+    console.error('Erro ao carregar as ligas:', error);
+    selectElement.innerHTML = '<option value="all">Erro ao carregar as ligas</option>';
+  }
+}
+
+window.onload = carregarLigas;
+
+const formDivisao = document.getElementById('inserirDivisaoForm');
+
+  formDivisao.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const divisaoNome = document.getElementById('nomedivisao').value;
+    const ligaSelecionada = document.getElementById('ligas').value;
+
+    try {
+      const response = await fetch('http://127.0.0.1:3000/inserirDivisao', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nomedivisao: divisaoNome,
+          ligaId: ligaSelecionada
+        })
+      });
+
+      if (response.ok) {
+        console.log('Divisão inserida com sucesso!');
+        // Limpa o valor da input após inserção bem-sucedida
+        document.getElementById('nomedivisao').value = '';
+        // Redireciona para a página InserirLeagues, se necessário
+        window.location.href = "/InserirLeagues";
+      } else {
+        console.error('Erro ao inserir a divisão');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar os dados da divisão:', error);
+    }
+  });
+
+</script>
 
 </body>
 </html>

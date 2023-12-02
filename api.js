@@ -1,8 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const connection = require('./db'); // Importe a conexão do arquivo db.js
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "styles"))); // Servir arquivos estáticos na rota '/styles'
@@ -112,5 +114,69 @@ app.post('/login', (req, res) => {
       res.status(401).send('Tenta De Novo');
     }
   });
+});
+
+app.post("/inserirDataLeagues", (req, res) => {
+  const { nomeliga } = req.body;
+
+  console.log("Dados recebidos:");
+  console.log("NomeLiga:", nomeliga);
+
+  // Validação dos dados (exemplo simples)
+  if (!nomeliga ) {
+    return res.status(400).send("Por favor, preencha o campos");
+  }
+
+  // Insira os dados na base de dados
+  connection.query(
+    'INSERT INTO ligas (NomeLiga) VALUES (?)',
+    [nomeliga],
+    (error, results, fields) => {
+      if (error) {
+        console.error("Erro ao inserir Liga:", error);
+        res.status(500).send("Erro ao registrar Liga");
+      } else {
+        console.log("Liga registada com sucesso!");
+        res.redirect("/fmInsertData"); // Redireciona para a página de fmInsertData
+      }
+    }
+  );
+});
+
+app.get('/ligas', (req, res) => {
+  connection.query('SELECT LigaID, NomeLiga FROM Ligas', (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao obter as ligas' });
+    } else {
+      res.json({ ligas: results }); // Retorna diretamente os resultados da consulta SQL
+    }
+  });
+});
+
+app.post("/inserirDivisao", (req, res) => {
+  const { nomedivisao, ligaId } = req.body;
+
+  console.log("Dados recebidos:");
+  console.log("NomeDivisao:", nomedivisao);
+  console.log("LigaID:", ligaId);
+
+  // Validação dos dados (exemplo simples)
+  if (!nomedivisao || !ligaId) {
+    return res.status(400).send("Por favor, preencha todos os campos");
+  }
+
+  // Insere os dados na base de dados
+  connection.query(
+    'INSERT INTO Divisoes (NomeDivisao, LigaID) VALUES (?, ?)',
+    [nomedivisao, ligaId],
+    (error, results, fields) => {
+      if (error) {
+        console.error("Erro ao inserir divisão:", error);
+        res.status(500).send("Erro ao registrar a divisão");
+      } else {
+        console.log("Divisão registrada com sucesso!");
+      }
+    }
+  );
 });
 
