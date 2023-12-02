@@ -65,34 +65,34 @@
   <div class="login-container">
     <h1>Decide Genius - Login</h1>
     <form id="loginForm">
-      <label for="username">Usuário:</label>
-      <input type="text" id="username" name="username" required><br><br>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required><br><br>
       <label for="password">Senha:</label>
       <input type="password" id="password" name="password" required><br><br>
       <button type="submit">Entrar</button>
     </form>
+    <button onclick="window.location.href='/register'">Registrar</button> <!-- Botão para a página de registro -->
   </div>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      
-      const username = document.getElementById("username").value;
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      // Envia os dados do formulário para o servidor
       fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
       })
       .then(response => {
         if (response.ok) {
-          window.location.href = "/filmes"; // Redireciona para fmInsertData.html após o login bem-sucedido
+          window.location.href = "/filmes"; // Redireciona para /filmes após o login bem-sucedido
         } else {
-          alert("Nome de usuário ou senha incorretos");
+          alert("Email ou senha incorretos");
         }
       })
       .catch(error => {
@@ -100,5 +100,6 @@
       });
     });
   </script>
+  
 </body>
 </html>

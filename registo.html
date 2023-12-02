@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seu Projeto - Registro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .register-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .register-container h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .register-container form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .register-container label {
+      margin-bottom: 10px;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"],
+    .register-container button {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 200px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+      border: 1px solid #ccc;
+      padding-left: 10px;
+    }
+
+    .register-container button {
+      background-color: #333;
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h1>Decide Genius - Registo</h1>
+    <form id="registerForm" method="POST" action="/register">
+        <label for="username">Nome:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Registrar</button>
+    </form>
+  </div>
+</body>
+</html>
