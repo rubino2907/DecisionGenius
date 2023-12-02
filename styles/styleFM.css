@@ -1,0 +1,274 @@
+/* /styles.css */
+/* Estilização do botão "Filme Aleatório" */
+button#randomMovieButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ccc;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 5px;
+  }
+  
+  button#randomMovieButton:hover {
+    background-color: #e68a00;
+  }
+  
+  /* Estilos para o resultado do filme aleatório */
+  #randomMovieResult {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Estilização do seletor de gênero */
+  label[for="genre"] {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  select#genre {
+    padding: 8px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  
+  /* Estilos para a barra de navegação */
+  nav {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Centraliza os itens na barra de navegação */
+  }
+  
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  /* Restante dos estilos */
+  
+  
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* ... */
+  .movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  
+  .movie {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+  
+  .movie img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .movie-details {
+    margin-top: 10px;
+  }
+  
+  .random-movie {
+    text-align: center;
+    margin: 20px auto;
+  }
+  
+  .random-movie .movie-details h3 {
+    font-weight: bold; /* Mantém o título do filme em negrito */
+  }
+  
+  .random-movie .movie-details p {
+    font-weight: normal; /* Remove o negrito do restante do texto */
+  }
+  
+  .random-movie .movie-poster {
+    max-width: 300px; /* Define a largura máxima da imagem */
+    height: auto; /* Garante que a altura seja ajustada proporcionalmente */
+    display: block; /* Remove o espaçamento adicional ao redor da imagem */
+    margin: 0 auto; /* Centraliza horizontalmente */
+  }
+  
+  /* Adicione ao seu arquivo styles.css */
+  
+  .teams-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  
+  .team {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .team img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .team-details {
+    padding: 10px;
+  }
+  
+  .team-details h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .team-details p {
+    margin: 0;
+  }
+  
+  /* Estilos para o container da equipe aleatória */
+  #randomTeamResult {
+    margin-top: 20px; /* Defina a margem superior desejada */
+  }
+  
+/* /styles.css */
+
+/* Estilos para a caixa que envolve os elementos */
+.container-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px; /* Ajuste a largura conforme necessário */
+    margin: 20px auto; /* Centraliza a caixa horizontalmente */
+  }
+  
+  /* Estilos para os inputs */
+  input[type="text"],
+  input[type="number"] {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  /* Estilo para o botão */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Estilizar o botão quando o cursor passar por cima */
+  button:hover {
+    background-color: #45a049;
+  }
+/* /styles.css */
+
+/* Estilos para a caixa que envolve os elementos */
+.container-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px; /* Ajuste a largura conforme necessário */
+    margin: 20px auto; /* Centraliza a caixa horizontalmente */
+  }
+  
+  /* Estilos para os inputs */
+  input[type="text"],
+  input[type="number"] {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  /* Estilo para o botão */
+  button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Estilizar o botão quando o cursor passar por cima */
+  button:hover {
+    background-color: #45a049;
+  }
+    

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Informações da Liga</title>
+  <!-- Adicione seu arquivo de estilos -->
+  <link rel="stylesheet" href="/styleFM.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="/InserirLeagues">Inserir Ligas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <h1 class="logo">Decide Genius</h1>
+    <h2>Explore informações sobre ligas esportivas e equipes!</h2>
+  </header>
+
+  <div class="container-box">
+    <label> LeagueName: <input type="text" class="LeagueName" /> </label>
+    <label> NumDivisões: <input type="number" class="NumDivisoes" /> </label>
+    <button>Send Data</button>
+  </div>
+    
+  <script>
+    var myLeague = document.querySelector(".LeagueName");
+var myNumDivisoes = document.querySelector(".NumDivisoes");
+var button = document.querySelector("button");
+
+button.addEventListener("click", () => {
+  var obj = {
+    leagueName: myLeague.value,
+    numDivisoes: myNumDivisoes.value
+  };
+
+  fetch("/createLeague", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(obj)
+  });
+});
+
+  </script>
+
+</body>
+</html>

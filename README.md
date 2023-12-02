@@ -1,3 +1,8 @@
 # DecisionGenius
 Combat to indecisions 
-541b941e28f44155acf306653c5b8596
+
+# Para baixar os nodemon
+npm install -g nodemon
+
+# Para iniciar a Api
+nodemon fmInsertData.js
