@@ -25,16 +25,14 @@
   </header>
 
   <main>
-    <section id="leagues">
-      <h2>Escolha uma Liga</h2>
-      <select id="leagueSelect">
-        <!-- Opções de ligas existentes -->
-      </select>
-      <select id="divisoesSelect">
-        <option value="">Selecione a liga primeiro</option>
-      </select>
-    </section>
-
+    <h2>Escolha uma Liga</h2>
+    <select id="ligas">
+      <!-- Opções de liga -->
+    </select>
+    <select id="divisoes" name="divisoes">
+      <!-- Opções de divisão -->
+    </select>
+  
     <section id="teams">
       <h2>Equipes da Liga Selecionada</h2>
       <div class="teams-container" id="teamsList">
@@ -44,6 +42,7 @@
       <div id="randomTeamResult"></div>
     </section>
   </main>
+  
 
   <!-- Importe seu arquivo de script corretamente -->
   <script src="scriptsFmHelper.js"></script>

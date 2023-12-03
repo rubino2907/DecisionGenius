@@ -39,9 +39,8 @@ app.get("/fmInsertData", (req, res) => {
 app.get("/filmes", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-
-app.post("/createLeague", (req, res) => {
-  console.log(req.body);
+app.get("/dashboardAdmin", (req, res) => {
+  res.sendFile(path.join(__dirname, "DashboardAdmin.html"));
 });
 
 app.listen(3000, () => {
@@ -102,16 +101,21 @@ app.post('/login', (req, res) => {
     return res.status(400).send('Por favor, informe o email e a senha');
   }
 
-  connection.query('SELECT * FROM utilizadores WHERE Email = ? AND Password = ?', [email, password], (error, results) => {
+  connection.query('SELECT * FROM Utilizadores WHERE Email = ? AND Password = ?', [email, password], (error, results) => {
     if (error) {
       console.error('Erro ao executar a consulta:', error);
       return res.status(500).send('Erro ao realizar o login');
     }
 
     if (results.length > 0) {
-      res.status(200).send('Login bem-sucedido');
+      const user = results[0];
+      if (user.isAdmin === 1) {
+        res.redirect("/dashboardAdmin");
+      } else {
+        res.redirect('/filmes');
+      }
     } else {
-      res.status(401).send('Tenta De Novo');
+      return res.status(401).send('Credenciais inválidas');
     }
   });
 });
@@ -217,3 +221,34 @@ app.get('/divisoes', (req, res) => {
     }
   });
 });
+
+app.get('/equipas/:divisaoID', (req, res) => {
+  const { divisaoID } = req.params;
+  
+  // Consulta SQL para obter as equipes da divisão especificada
+  const query = 'SELECT EquipaID, DivisaoID, NomeEquipa, EmblemaURL, ParticipacaoEuropeia, SaldoTransferencias, DinheiroTransferencias FROM Equipas WHERE DivisaoID = ?';
+
+  connection.query(query, [divisaoID], (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao obter as equipas' });
+    } else {
+      res.json({ equipas: results }); // Retorna diretamente os resultados da consulta SQL
+    }
+  });
+});
+
+app.get('/divisoes/:ligaID', (req, res) => {
+  const { ligaID } = req.params;
+  
+  // Consulta SQL para obter as divisões da liga especificada
+  const query = 'SELECT DivisaoID, NomeDivisao FROM Divisoes WHERE LigaID = ?';
+
+  connection.query(query, [ligaID], (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao obter as divisões' });
+    } else {
+      res.json({ divisoes: results }); // Retorna diretamente os resultados da consulta SQL
+    }
+  });
+});
+

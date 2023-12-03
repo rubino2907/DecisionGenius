@@ -1,186 +1,170 @@
-const ligasFutebol = [
-    { id: 1, name: 'Premier League', divisoes: 4 },
-    { id: 2, name: 'La Liga', divisoes: 3 },
-    { id: 3, name: 'Serie A', divisoes: 2 },
-    { id: 4, name: 'Bundesliga', divisoes: 2 },
-    { id: 5, name: 'Ligue 1', divisoes: 2 }
-    // Adicione mais ligas conforme necessário
-  ];
-  
-  const equipesFutebol = [
-    {
-      ligaId: 1,
-      divisao: 1,
-      name: 'Manchester City',
-      image: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
-      description: 'Manchester City Football Club é um clube de futebol inglês.'
-      // ...outros detalhes
-    },
-    {
-      ligaId: 1,
-      divisao: 2,
-      name: 'Manchester City',
-      image: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
-      description: 'Manchester City Football Club é um clube de futebol inglês.'
-      // ...outros detalhes
-    },
-    {
-        ligaId: 1,
-        divisao: 1,
-        name: 'Manchester United',
-        image: 'https://upload.wikimedia.org/wikipedia/sco/thumb/7/7a/Manchester_United_FC_crest.svg/2021px-Manchester_United_FC_crest.svg.png',
-        description: 'Manchester Unied Football Club é um clube de futebol inglês.'
-        // ...outros detalhes
-    },
-    {
-      ligaId: 1,
-      divisao: 1,
-      name: 'Newcastle',
-      image: 'https://upload.wikimedia.org/wikipedia/sco/thumb/5/56/Newcastle_United_Logo.svg/1200px-Newcastle_United_Logo.svg.png',
-      description: 'Newcastle é um clube de futebol inglês.'
-      // ...outros detalhes
-    },
-    {
-        ligaId: 1,
-        divisao: 1,
-        name: 'Chelsea',
-        image: 'https://upload.wikimedia.org/wikipedia/sco/thumb/c/cc/Chelsea_FC.svg/1200px-Chelsea_FC.svg.png',
-        description: 'Chelsea é um clube de futebol inglês.'
-        // ...outros detalhes
-    },
-    {
-      ligaId: 5,
-      divisao: 1,
-      name: 'PSG',
-      image: 'https://logovectordl.com/wp-content/uploads/2021/05/paris-saint-germain-logo-vector.png',
-      description: 'PSG é um clube de futebol frances.'
-      // ...outros detalhes
-    },
-    {
-      ligaId: 2,
-      divisao: 1,
-      name: 'Real Madrid',
-      image: 'https://cdn.worldvectorlogo.com/logos/real-madrid-c-f.svg',
-      description: 'Real Madrid é um clube de futebol espanhol.'
-      // ...outros detalhes
-    },
-    {
-        ligaId: 2,
-        divisao: 1,
-        name: 'Barcelona',
-        image: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1010px-FC_Barcelona_%28crest%29.svg.png',
-        description: 'Barcelona é um clube de futebol espanhol.'
-        // ...outros detalhes
-    },
-      
-    // Adicione mais detalhes conforme necessário
-  ];
-  
-  
-  function preencherOpcoesLigas() {
-    const selectElement = document.getElementById('leagueSelect');
-  
-    ligasFutebol.forEach(liga => {
+// Funções independentes para carregar ligas e divisões
+async function carregarLigas() {
+  const selectElement = document.getElementById('ligas');
+
+  try {
+    const response = await fetch('http://127.0.0.1:3000/ligas');
+    const data = await response.json();
+
+    selectElement.innerHTML = '<option value="">Selecione Liga</option>'; // Adiciona a opção "Selecione Liga" no início
+
+    data.ligas.forEach(liga => {
       const option = document.createElement('option');
-      option.value = liga.id;
-      option.textContent = liga.name;
+      option.value = liga.LigaID;
+      option.textContent = liga.NomeLiga;
       selectElement.appendChild(option);
     });
-  
-    selectElement.addEventListener('change', function() {
-      const divisoesSelect = document.getElementById('divisoesSelect');
-      const ligaSelecionada = ligasFutebol.find(liga => liga.id === parseInt(this.value));
-  
-      divisoesSelect.innerHTML = '';
-  
-      if (ligaSelecionada) {
-        for (let i = 1; i <= ligaSelecionada.divisoes; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.textContent = `Divisão ${i}`;
-          divisoesSelect.appendChild(option);
-        }
-        showTeams(ligaSelecionada.id, divisoesSelect.value);
-      } else {
-        divisoesSelect.innerHTML = '<option value="">Selecione a liga primeiro</option>';
-      }
-    });
-  }
-  
-  function showTeams(ligaId, divisao) {
-    const teamsList = document.getElementById('teamsList');
-    teamsList.innerHTML = '';
-  
-    const filteredTeams = equipesFutebol.filter(equipe => equipe.ligaId === ligaId && equipe.divisao === parseInt(divisao));
-  
-    if (filteredTeams.length > 0) {
-      filteredTeams.forEach(equipe => {
-        const teamElement = document.createElement('div');
-        teamElement.classList.add('team');
-  
-        const teamImage = document.createElement('img');
-        teamImage.src = equipe.image;
-        teamImage.alt = equipe.name;
-        teamElement.appendChild(teamImage);
-  
-        const teamDetails = document.createElement('div');
-        teamDetails.classList.add('team-details');
-  
-        const teamName = document.createElement('h3');
-        teamName.textContent = equipe.name;
-        teamDetails.appendChild(teamName);
-  
-        const teamDescription = document.createElement('p');
-        teamDescription.textContent = equipe.description;
-        teamDetails.appendChild(teamDescription);
-  
-        teamElement.appendChild(teamDetails);
-        teamsList.appendChild(teamElement);
-      });
-    } else {
-      const noTeamElement = document.createElement('div');
-      noTeamElement.textContent = 'Nenhuma equipe encontrada para esta divisão.';
-      teamsList.appendChild(noTeamElement);
-    }
-  }
-  
-  
-  window.addEventListener('load', preencherOpcoesLigas);
 
-// Adicione um ouvinte de evento para o botão "Equipe Aleatória"
-const randomTeamButton = document.getElementById('randomTeamButton');
-randomTeamButton.addEventListener('click', () => {
-  const ligaSelecionada = document.getElementById('leagueSelect').value;
-  const divisaoSelecionada = document.getElementById('divisoesSelect').value;
-
-  if (ligaSelecionada && divisaoSelecionada) {
-    showRandomTeam(parseInt(ligaSelecionada), parseInt(divisaoSelecionada));
-  } else {
-    alert('Selecione uma liga e divisão antes de obter uma equipe aleatória.');
-  }
-});
-
-// Função para mostrar uma equipe aleatória com base na liga e divisão selecionadas
-function showRandomTeam(ligaId, divisao) {
-  const filteredTeams = equipesFutebol.filter(equipe => equipe.ligaId === ligaId && equipe.divisao === divisao);
-
-  if (filteredTeams.length > 0) {
-    const randomIndex = Math.floor(Math.random() * filteredTeams.length);
-    const randomTeam = filteredTeams[randomIndex];
-
-    // Aqui você pode exibir os detalhes da equipe aleatória conforme desejado
-    console.log('Equipe Aleatória:', randomTeam);
-    // Por exemplo: exibir na div randomTeamResult na página
-    const randomTeamResult = document.getElementById('randomTeamResult');
-    randomTeamResult.innerHTML = `
-      <div class="team">
-        <h3>${randomTeam.name}</h3>
-        <img src="${randomTeam.image}" alt="${randomTeam.name}">
-        <p>${randomTeam.description}</p>
-      </div>
-    `;
-  } else {
-    alert('Nenhuma equipe encontrada para a liga e divisão selecionadas.');
+  } catch (error) {
+    console.error('Erro ao carregar as ligas:', error);
+    selectElement.innerHTML = '<option value="all">Erro ao carregar as ligas</option>';
   }
 }
+
+
+window.onload = async () => {
+  await carregarLigas();
+
+  const ligasSelect = document.getElementById('ligas');
+  ligasSelect.addEventListener('change', async () => {
+    const selectedLeague = ligasSelect.value;
+    await carregarDivisoes(selectedLeague);
+  });
+
+  const divisoesSelect = document.getElementById('divisoes');
+  divisoesSelect.addEventListener('change', async () => {
+    const selectedDivision = divisoesSelect.value;
+    if (selectedDivision !== '') {
+      try {
+        const response = await fetch(`http://127.0.0.1:3000/equipas/${selectedDivision}`);
+        const data = await response.json();
+        displayTeams(data.equipas);
+      } catch (error) {
+        console.error('Erro ao carregar as equipes:', error);
+      }
+    }
+  });
+
+  const randomTeamButton = document.getElementById('randomTeamButton');
+  randomTeamButton.addEventListener('click', async () => {
+    const selectedDivision = divisoesSelect.value;
+    if (selectedDivision !== '') {
+      try {
+        const response = await fetch(`http://127.0.0.1:3000/equipas/${selectedDivision}`);
+        const data = await response.json();
+        const teams = data.equipas;
+
+        const randomIndex = Math.floor(Math.random() * teams.length);
+        const randomTeam = teams[randomIndex];
+        
+        displayRandomTeam(randomTeam);
+      } catch (error) {
+        console.error('Erro ao carregar as equipes:', error);
+      }
+    }
+  });
   
+};
+
+async function carregarDivisoes() {
+  const selectElement = document.getElementById('divisoes');
+
+  try {
+    const response = await fetch('http://127.0.0.1:3000/divisoes');
+    const data = await response.json();
+
+    selectElement.innerHTML = '<option value="">Selecione Divisão</option>'; // Adiciona a opção "Selecione Divisão" no início
+
+    data.divisoes.forEach(divisao => {
+      const option = document.createElement('option');
+      option.value = divisao.DivisaoID;
+      option.textContent = divisao.NomeDivisao;
+      selectElement.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error('Erro ao carregar as divisões:', error);
+    selectElement.innerHTML = '<option value="">Erro ao carregar as divisões</option>';
+  }
+}
+
+function displayTeams(teams) {
+  const teamsContainer = document.getElementById('teamsList');
+  teamsContainer.innerHTML = ''; // Limpa o conteúdo antes de exibir as novas equipes
+
+  teams.forEach(team => {
+    const teamContainer = document.createElement('div');
+    teamContainer.classList.add('team');
+
+    const badge = document.createElement('div');
+    badge.innerHTML = team.EmblemaURL; // Verifique se o EmblemaURL está retornando corretamente o SVG
+    badge.classList.add('team-badge');
+
+    const teamInfo = document.createElement('div');
+    teamInfo.classList.add('team-info');
+
+    const teamName = document.createElement('p');
+    teamName.textContent = 'Nome: ' + team.NomeEquipa;
+
+    const participation = document.createElement('p');
+    participation.textContent = 'Participação Europeia: ' + team.ParticipacaoEuropeia;
+
+    const transferBalance = document.createElement('p');
+    transferBalance.textContent = 'Saldo de Transferências: ' + team.SaldoTransferencias;
+
+    const transferMoney = document.createElement('p');
+    transferMoney.textContent = 'Dinheiro para Transferências: ' + team.DinheiroTransferencias;
+
+    teamInfo.appendChild(teamName);
+    teamInfo.appendChild(participation);
+    teamInfo.appendChild(transferBalance);
+    teamInfo.appendChild(transferMoney);
+
+    teamContainer.appendChild(badge);
+    teamContainer.appendChild(teamInfo);
+
+    teamsContainer.appendChild(teamContainer);
+  });
+}
+
+function displayRandomTeam(team) {
+  const randomTeamResult = document.getElementById('randomTeamResult');
+  randomTeamResult.innerHTML = ''; // Limpa o conteúdo antes de exibir a nova equipe aleatória
+
+  const teamContainer = document.createElement('div');
+  teamContainer.classList.add('team');
+
+  const badge = document.createElement('div');
+  badge.innerHTML = team.EmblemaURL; // Verifique se o EmblemaURL está retornando corretamente o SVG
+  badge.classList.add('team-badge');
+
+  const teamInfo = document.createElement('div');
+  teamInfo.classList.add('team-info');
+
+  const teamName = document.createElement('p');
+  teamName.textContent = 'Nome: ' + team.NomeEquipa;
+
+  const participation = document.createElement('p');
+  participation.textContent = 'Participação Europeia: ' + team.ParticipacaoEuropeia;
+
+  const transferBalance = document.createElement('p');
+  transferBalance.textContent = 'Saldo de Transferências: ' + team.SaldoTransferencias;
+
+  const transferMoney = document.createElement('p');
+  transferMoney.textContent = 'Dinheiro para Transferências: ' + team.DinheiroTransferencias;
+
+  teamInfo.appendChild(teamName);
+  teamInfo.appendChild(participation);
+  teamInfo.appendChild(transferBalance);
+  teamInfo.appendChild(transferMoney);
+
+  teamContainer.appendChild(badge);
+  teamContainer.appendChild(teamInfo);
+
+  randomTeamResult.appendChild(teamContainer);
+}
+
+
+
+
+

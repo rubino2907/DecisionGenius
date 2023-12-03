@@ -152,6 +152,7 @@ label {
 
 /* Adicione ao seu arquivo styles.css */
 
+/* Container das equipes */
 .teams-container {
   display: flex;
   flex-wrap: wrap;
@@ -159,6 +160,7 @@ label {
   justify-content: flex-start;
 }
 
+/* Estilo para cada equipe individual */
 .team {
   flex: 0 0 calc(25% - 20px);
   max-width: calc(25% - 20px);
@@ -169,6 +171,7 @@ label {
   overflow: hidden;
 }
 
+/* Estilo para a imagem (emblema) da equipe */
 .team img {
   width: 100%;
   height: auto;
@@ -176,15 +179,18 @@ label {
   border-bottom: 1px solid #ddd;
 }
 
+/* Estilo para os detalhes da equipe */
 .team-details {
   padding: 10px;
 }
 
+/* Estilo para o título da equipe */
 .team-details h3 {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
+/* Estilo para informações da equipe */
 .team-details p {
   margin: 0;
 }

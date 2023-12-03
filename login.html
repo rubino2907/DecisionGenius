@@ -64,7 +64,7 @@
 <body>
   <div class="login-container">
     <h1>Decide Genius - Login</h1>
-    <form id="loginForm">
+    <form id="loginForm" method="POST" action="/login">
       <label for="email">Email:</label>
       <input type="text" id="email" name="email" required><br><br>
       <label for="password">Senha:</label>
@@ -73,33 +73,8 @@
     </form>
     <button onclick="window.location.href='/register'">Registrar</button> <!-- Botão para a página de registro -->
   </div>
-
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
-
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = "/filmes"; // Redireciona para /filmes após o login bem-sucedido
-        } else {
-          alert("Email ou senha incorretos");
-        }
-      })
-      .catch(error => {
-        console.error("Erro ao realizar o login:", error);
-      });
-    });
-  </script>
+  
+  
   
 </body>
 </html>
