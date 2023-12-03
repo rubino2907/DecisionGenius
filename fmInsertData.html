@@ -55,74 +55,27 @@
     <div class="form-box">
       <h3>Inserir Clube</h3>
       <form id="inserirClubeForm" method="POST" action="/inserirDataClube">
-        <label> ClubName: <input type="text" class="ClubName" id="nomeclube" name="nomeclube" required/> </label>
-        <button>Send Data</button>
+          <label>ClubName: <input type="text" class="ClubName" id="nomeclube" name="nomeclube" required/></label>
+          <label>Emblema URL: <input type="text" class="EmblemaURL" id="emblemaurl" name="emblemaurl" required/></label>
+          <label>Divisão:
+            <select id="divisoes" name="divisoes">
+              <!-- Opções de divisão -->
+            </select>
+        </label>
+          <label>Participacao Europeia: 
+              <select id="participacaoEuropeia" name="participacaoEuropeia">
+                  <option value="Sim">Sim</option>
+                  <option value="Nao">Nao</option>
+              </select>
+          </label>
+          <label>Saldo Transferências: <input type="number" class="SaldoTransferencias" id="saldoTransferencias" name="saldoTransferencias" required/></label>
+          <label>Dinheiro Transferências: <input type="number" class="DinheiroTransferencias" id="dinheiroTransferencias" name="dinheiroTransferencias" required/></label>
+          <button>Send Data</button>
       </form>
-    </div>
+  </div>
+  
   </div>
 </div>
-
-<script>
-  // Função para preencher o select com as ligas
-  async function carregarLigas() {
-  const selectElement = document.getElementById('ligas');
-
-  try {
-    const response = await fetch('http://127.0.0.1:3000/ligas');
-    const data = await response.json();
-
-    selectElement.innerHTML = '';
-
-    data.ligas.forEach(liga => {
-    const option = document.createElement('option');
-    option.value = liga.LigaID; // Use a propriedade correta do ID da liga
-    option.textContent = liga.NomeLiga; // Use a propriedade correta do nome da liga
-    selectElement.appendChild(option);
-  });
-
-  } catch (error) {
-    console.error('Erro ao carregar as ligas:', error);
-    selectElement.innerHTML = '<option value="all">Erro ao carregar as ligas</option>';
-  }
-}
-
-window.onload = carregarLigas;
-
-const formDivisao = document.getElementById('inserirDivisaoForm');
-
-  formDivisao.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const divisaoNome = document.getElementById('nomedivisao').value;
-    const ligaSelecionada = document.getElementById('ligas').value;
-
-    try {
-      const response = await fetch('http://127.0.0.1:3000/inserirDivisao', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nomedivisao: divisaoNome,
-          ligaId: ligaSelecionada
-        })
-      });
-
-      if (response.ok) {
-        console.log('Divisão inserida com sucesso!');
-        // Limpa o valor da input após inserção bem-sucedida
-        document.getElementById('nomedivisao').value = '';
-        // Redireciona para a página InserirLeagues, se necessário
-        window.location.href = "/InserirLeagues";
-      } else {
-        console.error('Erro ao inserir a divisão');
-      }
-    } catch (error) {
-      console.error('Erro ao enviar os dados da divisão:', error);
-    }
-  });
-
-</script>
-
+<script src="scriptsInsertData.js"></script>
 </body>
 </html>
