@@ -66,11 +66,11 @@ window.onload = async () => {
   
 };
 
-async function carregarDivisoes() {
+async function carregarDivisoes(idLiga) {
   const selectElement = document.getElementById('divisoes');
 
   try {
-    const response = await fetch('http://127.0.0.1:3000/divisoes');
+    const response = await fetch(`http://127.0.0.1:3000/divisoes/${idLiga}`);
     const data = await response.json();
 
     selectElement.innerHTML = '<option value="">Selecione Divisão</option>'; // Adiciona a opção "Selecione Divisão" no início
@@ -87,6 +87,7 @@ async function carregarDivisoes() {
     selectElement.innerHTML = '<option value="">Erro ao carregar as divisões</option>';
   }
 }
+
 
 function displayTeams(teams) {
   const teamsContainer = document.getElementById('teamsList');

@@ -33,9 +33,6 @@ app.get("/fmHelper", (req, res) => {
   res.sendFile(path.join(__dirname, "fmHelper.html"));
 });
 
-app.get("/fmInsertData", (req, res) => {
-  res.sendFile(path.join(__dirname, "fmInsertData.html"));
-});
 app.get("/filmes", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
