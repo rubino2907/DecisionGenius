@@ -199,3 +199,74 @@ label {
 #randomTeamResult {
   margin-top: 20px; /* Defina a margem superior desejada */
 }
+
+.containerEdit {
+  width: 60%;
+  margin: 30px auto;
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.profile-info {
+  margin-top: 20px;
+}
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 20px; /* Centraliza verticalmente */
+  display: block;
+  border: 2px solid #ccc;
+}
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+input[type="file"] {
+  margin-bottom: 10px;
+}
+input[type="text"] {
+  width: calc(35% - 18px);
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #222222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+input[type="submit"]:hover {
+  background-color: #2c2c2c;
+}
+
+input[type="file"] {
+  display: none; /* Oculta o botão de seleção de arquivo padrão */
+}
+
+label[for="avatar"] {
+  padding: 10px 20px; /* Adiciona preenchimento ao rótulo para simular um botão */
+  background-color: #222222; /* Cor de fundo */
+  color: #fff; /* Cor do texto */
+  border: none; /* Remove a borda */
+  border-radius: 4px; /* Adiciona bordas arredondadas */
+  cursor: pointer; /* Mostra o cursor ao passar por cima */
+  transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor */
+  display: inline-block; /* Exibe como um elemento de bloco */
+  margin-bottom: 10px; /* Adiciona espaçamento inferior */
+  text-align: center; /* Centraliza o texto */
+}
+
+label[for="avatar"]:hover {
+  background-color: #2c2c2c; /* Cor de fundo ao passar o mouse por cima */
+}

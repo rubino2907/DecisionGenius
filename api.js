@@ -1,10 +1,64 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const fs = require('fs');
+const upload = multer({ dest: 'uploads/' }); // Diretório de uploads
 const path = require('path');
 const connection = require('./db'); // Importe a conexão do arquivo db.js
-
 const app = express();
+
+// Configuração do middleware de sessão
+app.use(session({
+  secret: 'secreto', // Chave secreta para assinar a sessão (pode ser qualquer coisa)
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Diretório de uploads
+const uploadDestination = './uploads/';
+if (!fs.existsSync(uploadDestination)) {
+  fs.mkdirSync(uploadDestination);
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDestination);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const fileUpload = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 5 } // Limite de 5MB
+}).single('avatar'); // 'avatar' é o nome do campo do formulário onde o arquivo será enviado
+
+// Usando o middleware de upload
+app.post('/upload', (req, res) => {
+  fileUpload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // Ocorreu um erro do Multer ao fazer o upload
+      return res.status(500).json({ error: 'Erro ao fazer upload do arquivo' });
+    } else if (err) {
+      // Outro tipo de erro
+      return res.status(500).json({ error: 'Ocorreu um erro' });
+    }
+
+    // Arquivo enviado com sucesso
+    res.send('Arquivo enviado com sucesso!');
+  });
+});
+
+// Configuração da rota estática para servir arquivos, como imagens
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs'); // Define o mecanismo de visualização como EJS
+app.set('views', path.join(__dirname, 'views')); // Define o diretório 'views' para os modelos
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "styles"))); // Servir arquivos estáticos na rota '/styles'
@@ -16,17 +70,55 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
 });
 
+
+
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "registo.html"));
 });
 
-// Rota protegida - verifica se o usuário está autenticado antes de redirecionar para a página fmInsertData.html
-app.get("/InserirLeagues", (req, res) => {
-  // Aqui você pode adicionar lógica para verificar se o usuário está autenticado
-  // Por exemplo, verificar se o usuário está logado ou se possui um token válido
+app.get('/profile', (req, res) => {
+  const user = req.session.user;
 
-  // Supondo que o usuário esteja autenticado, redirecione para a página fmInsertData.html
-  res.sendFile(path.join(__dirname, "fmInsertData.html"));
+  if (user) {
+    // Acesso aos detalhes do usuário na sessão, incluindo UtilizadorID
+    res.render('profile', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+// Rota '/editProfile' também pode ser ajustada da mesma forma
+app.get('/editProfile', (req, res) => {
+  const user = req.session.user;
+
+  if (user) {
+    res.render('editProfile', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+// Rota '/editProfile' também pode ser ajustada da mesma forma
+app.get('/fmInsertData', (req, res) => {
+  const user = req.session.user;
+
+  if (user) {
+    res.render('fmInsertData', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get("/fmHelper", (req, res) => {
@@ -87,6 +179,7 @@ function validateEmail(email) {
   return re.test(email);
 }
 
+// Rota para o processo de login
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -106,16 +199,23 @@ app.post('/login', (req, res) => {
 
     if (results.length > 0) {
       const user = results[0];
-      if (user.isAdmin === 1) {
-        res.redirect("/dashboardAdmin");
-      } else {
-        res.redirect('/filmes');
-      }
+
+      console.log('UtilizadorID:', user.UtilizadorID);
+      // Após a verificação do login ser bem-sucedida, armazene os detalhes do usuário na sessão
+      req.session.user = {
+        UtilizadorID: user.UtilizadorID,
+        Nome: user.Nome,
+        Email: user.Email
+      };
+      res.redirect('/profile');
     } else {
       return res.status(401).send('Credenciais inválidas');
     }
   });
 });
+
+
+
 
 app.post("/inserirDataLeagues", (req, res) => {
   const { nomeliga } = req.body;
@@ -143,6 +243,30 @@ app.post("/inserirDataLeagues", (req, res) => {
     }
   );
 });
+
+app.get('/getUsers', (req, res) => {
+  connection.query('SELECT UtilizadorID, Nome, Email FROM Utilizadores', (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao obter as users' });
+    } else {
+      res.json({ users: results }); // Retorna diretamente os resultados da consulta SQL
+    }
+  });
+});
+
+app.get('/getUserDetails', (req, res) => {
+  // Recupera os detalhes do usuário da sessão
+  const user = req.session.user;
+
+  if (user) {
+    // Se houver detalhes do usuário na sessão, envie esses detalhes como resposta em formato JSON
+    res.json({ UtilizadorID: user.UtilizadorID, nome: user.Nome, email: user.Email });
+  } else {
+    // Se não houver detalhes do usuário na sessão, retorne um objeto vazio ou um erro
+    res.status(404).json({ error: 'Detalhes do usuário não encontrados' });
+  }
+});
+
 
 app.get('/ligas', (req, res) => {
   connection.query('SELECT LigaID, NomeLiga FROM Ligas', (error, results) => {
@@ -181,43 +305,37 @@ app.post("/inserirDivisao", (req, res) => {
   );
 });
 
-// Rota para inserir dados do clube
-app.post('/inserirDataClube', (req, res) => {
-  const { nomeclube, emblemaurl, participacaoEuropeia, saldoTransferencias, dinheiroTransferencias, divisaoSelecionada } = req.body;
+app.post('/inserirDataClube', upload.single('avatar'), (req, res) => {
+  const { nomeclube, participacaoEuropeia, saldoTransferencias, dinheiroTransferencias, divisaoSelecionada } = req.body;
+  const emblemaPath = req.file ? req.file.path : null; // Caminho do emblema, se fornecido
 
   console.log('Dados recebidos para inserir clube:');
   console.log('Nome do Clube:', nomeclube);
-  console.log('Emblema URL:', emblemaurl);
   console.log('Participação em Competições Europeias:', participacaoEuropeia);
   console.log('Saldo para Transferências:', saldoTransferencias);
   console.log('Dinheiro Disponível para Transferências:', dinheiroTransferencias);
-  console.log('Divisão:', divisaoSelecionada); // Certifique-se de que
+  console.log('Divisão:', divisaoSelecionada);
+  console.log('Caminho do Emblema:', emblemaPath);
 
-  // Montar a query SQL para inserir dados na tabela Equipas
-const query = 'INSERT INTO Equipas (NomeEquipa, EmblemaURL, ParticipacaoEuropeia, SaldoTransferencias, DinheiroTransferencias, DivisaoID) VALUES (?, ?, ?, ?, ?, ?)';
+  // Montar a query SQL para inserir dados na tabela de Equipas
+  let query = 'INSERT INTO Equipas (NomeEquipa, ParticipacaoEuropeia, SaldoTransferencias, DinheiroTransferencias, DivisaoID, EmblemaURL) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [nomeclube, participacaoEuropeia, saldoTransferencias, dinheiroTransferencias, divisaoSelecionada, emblemaPath];
 
-// Executar a query SQL com os dados recebidos
-connection.query(query, [nomeclube, emblemaurl, participacaoEuropeia, saldoTransferencias, dinheiroTransferencias, divisaoSelecionada], (err, results) => {
-  if (err) {
-    console.error('Erro ao inserir dados do clube:', err);
-    res.status(500).send('Erro ao inserir dados do clube');
-  } else {
-    console.log('Dados do clube inseridos com sucesso na tabela Equipas');
-    res.status(200).send('Dados do clube inseridos com sucesso na tabela Equipas');
-  }
-});
+  console.log('Query:', query);
+  console.log('Valores:', values);
 
-});
-
-app.get('/divisoes', (req, res) => {
-  connection.query('SELECT DivisaoID, NomeDivisao FROM Divisoes', (error, results) => {
+  // Executar a query no banco de dados
+  connection.query(query, values, (error, results) => {
     if (error) {
-      res.status(500).json({ error: 'Erro ao obter as divisoes' });
+      console.error('Erro ao inserir dados do clube:', error);
+      res.status(500).send('Erro ao inserir dados do clube');
     } else {
-      res.json({ divisoes: results }); // Retorna diretamente os resultados da consulta SQL
+      console.log('Dados do clube inseridos com sucesso na tabela Equipas');
+      res.status(200).send('Dados do clube inseridos com sucesso na tabela Equipas');
     }
   });
 });
+
 
 app.get('/equipas/:divisaoID', (req, res) => {
   const { divisaoID } = req.params;
@@ -248,4 +366,83 @@ app.get('/divisoes/:ligaID', (req, res) => {
     }
   });
 });
+
+app.put('/updateProfile/:userId', upload.single('avatar'), (req, res) => {
+  const userId = req.params.userId;
+  const { name } = req.body; // Novo nome do usuário
+  const avatarPath = req.file ? req.file.path : null; // Caminho da nova imagem de perfil, se fornecida
+
+  console.log('Dados recebidos para atualização:');
+  console.log('userID:', userId);
+  console.log('Novo Nome:', name);
+  console.log('Caminho da Nova Imagem:', avatarPath);
+
+  // Atualização do nome e/ou imagem do usuário na base de dados
+  let query = 'UPDATE utilizadores SET ';
+  const values = [];
+
+  if (name) {
+    query += 'Nome = ?, ';
+    values.push(name);
+  }
+
+  if (avatarPath) {
+    query += 'ImagemPerfil = ?, ';
+    values.push(avatarPath);
+  }
+
+  // Verifica se nem o nome nem a imagem foram fornecidos
+  if (!name && !avatarPath) {
+    return res.status(400).send('Por favor, forneça o novo nome e/ou imagem');
+  }
+
+  // Remove a última vírgula e finaliza a query
+  query = query.slice(0, -2);
+  query += ' WHERE UtilizadorID = ?';
+  values.push(userId);
+
+  console.log('Query:', query);
+  console.log('Valores:', values);
+
+  // Executa a query no banco de dados
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Erro ao atualizar o perfil:', error);
+      res.status(500).send('Erro ao atualizar o perfil');
+    } else {
+      console.log('Perfil do usuário atualizado com sucesso!');
+      res.status(200).send('Perfil do usuário atualizado com sucesso!');
+    }
+  });
+});
+
+app.get('/getUserImage/:userID', (req, res) => {
+  const userID = req.params.userID;
+
+  // Consulta SQL para obter o caminho da imagem do usuário com base no UtilizadorID
+  const sql = 'SELECT ImagemPerfil FROM Utilizadores WHERE UtilizadorID = ?';
+
+  connection.query(sql, [userID], (error, results) => {
+    if (error) {
+      console.error('Erro ao buscar a imagem do perfil:', error);
+      res.status(500).json({ error: 'Erro ao buscar a imagem do perfil' });
+    } else {
+      if (results.length > 0) {
+        const imagePath = results[0].ImagemPerfil;
+
+        // Se houver um caminho de imagem associado ao usuário, retorne-o
+        res.json({ imagePath });
+      } else {
+        // Se o UtilizadorID não for encontrado, retorne um erro ou um valor padrão
+        res.status(404).json({ error: 'Utilizador não encontrado' });
+      }
+    }
+  });
+});
+
+
+
+
+
+
 

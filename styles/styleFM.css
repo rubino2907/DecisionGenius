@@ -292,3 +292,35 @@ button#randomMovieButton {
     font-size: 16px;
     cursor: pointer;
   }
+
+  /* Estilos CSS para a imagem */
+.img-emblema {
+  width: 150px; /* Largura desejada */
+  height: auto; /* Altura automática para manter a proporção */
+  border-radius: 8px; /* Borda arredondada */
+  /* Outros estilos, como sombras, bordas, etc., podem ser adicionados conforme desejado */
+}
+
+/* Estilos para o botão de upload personalizado */
+.upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilizando quando o cursor passa sobre o botão */
+.upload-btn:hover {
+  background-color: #525252;
+}
+
+/* Estilo para o texto que aparece ao lado do botão */
+#file-upload {
+  display: none; /* Esconda o input do tipo file */
+}
+
+

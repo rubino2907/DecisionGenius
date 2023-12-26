@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Informações da Liga</title>
+  <!-- Adicione seu arquivo de estilos -->
+  <link rel="stylesheet" href="/styleFM.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <ul class="nav-links">
+        <li><a href="/dashboardAdmin">Home</a></li>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="/profile">Perfil</a></li>
+        <li><a href="#about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <h1 class="logo">Decide Genius</h1>
+    <h2>Explore informações sobre ligas esportivas e equipes!</h2>
+  </header>
+
+  <div class="container-box">
+    <!-- Caixa para Inserir Liga -->
+   <!-- Novo layout para os formulários -->
+   <div class="form-container">
+    <!-- Caixa para Inserir Liga -->
+    <div class="form-box">
+      <h3>Inserir Liga</h3>
+      <form id="inserirLeaguesForm" method="POST" action="/inserirDataLeagues">
+        <label> LeagueName: <input type="text" class="LeagueName" id="nomeliga" name="nomeliga" required/> </label>
+        <button>Send Data</button>
+      </form>
+    </div>
+
+    <!-- Caixa para Inserir Divisão -->
+    <div class="form-box">
+      <h3>Inserir Divisão</h3>
+      <form id="inserirDivisaoForm" method="POST" action="/inserirDataDivisao">
+        <label>Todas as Ligas:</label>
+        <select id="ligas" name="ligas">
+          <option>Ligas</option>
+          <!-- Opções de gênero carregadas dinamicamente -->
+        </select>
+        <label> DivisionName: <input type="text" class="DivisionName" id="nomedivisao" name="nomedivisao" required/> </label>
+        <button>Send Data</button>
+      </form>
+    </div>
+
+    <!-- Caixa para Inserir Clube -->
+    <div class="form-box">
+      <h3>Inserir Clube</h3>
+      <form id="inserirClubeForm" method="POST" action="/inserirDataClube" enctype="multipart/form-data">
+          <label>ClubName: <input type="text" class="ClubName" id="nomeclube" name="nomeclube" required/></label>
+          <label>Emblema: <input type="file" class="Emblema" id="emblemaurl" name="avatar" accept="image/*" required/></label>
+          <label>Selecione uma Liga:</label>
+          <select id="ligass">
+            <option>Ligas</option>
+            <!-- Opções de gênero carregadas dinamicamente -->
+          </select>
+          <label>Divisão:
+            <select id="divisoes" name="divisoes">
+              <!-- Opções de divisão -->
+            </select>
+        </label>
+          <label>Participacao Europeia: 
+              <select id="participacaoEuropeia" name="participacaoEuropeia">
+                  <option value="Sim">Sim</option>
+                  <option value="Nao">Nao</option>
+              </select>
+          </label>
+          <label>Saldo Transferências: <input type="number" class="SaldoTransferencias" id="saldoTransferencias" name="saldoTransferencias" required/></label>
+          <label>Dinheiro Transferências: <input type="number" class="DinheiroTransferencias" id="dinheiroTransferencias" name="dinheiroTransferencias" required/></label>
+          <button>Send Data</button>
+      </form>
+  </div>
+  
+  </div>
+</div>
+<script src="scriptsInsertData.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
-async function carregarDados() {
-    await carregarLigas();
-    await carregarDivisoes();
+document.addEventListener('DOMContentLoaded', async () => {
+  // Seu código JavaScript aqui
+  async function carregarDados() {
 
     const formDivisao = document.getElementById('inserirDivisaoForm');
   
@@ -25,7 +25,6 @@ async function carregarDados() {
         if (response.ok) {
           console.log('Divisão inserida com sucesso!');
           limparCampos();
-          window.location.href = "/InserirLeagues";
         } else {
           console.error('Erro ao inserir a divisão');
         }
@@ -42,8 +41,44 @@ async function carregarDados() {
       const response = await fetch('http://127.0.0.1:3000/ligas');
       const data = await response.json();
   
-      selectElement.innerHTML = '';
+      selectElement.innerHTML = ''; // Limpa o conteúdo do select
   
+      // Adiciona a opção "Selecione uma Liga" no início do select
+      const selectOption = document.createElement('option');
+      selectOption.value = ''; // Defina um valor vazio ou o mais adequado para esta opção
+      selectOption.textContent = 'Selecione uma Liga'; // Texto exibido para a opção
+      selectElement.appendChild(selectOption);
+  
+      // Itera sobre os dados das ligas e adiciona as opções no select
+      data.ligas.forEach(liga => {
+        const option = document.createElement('option');
+        option.value = liga.LigaID;
+        option.textContent = liga.NomeLiga;
+        selectElement.appendChild(option);
+      });
+  
+    } catch (error) {
+      console.error('Erro ao carregar as ligas:', error);
+      selectElement.innerHTML = '<option value="all">Erro ao carregar as ligas</option>';
+    }
+  }
+
+  async function carregarLigas2() {
+    const selectElement = document.getElementById('ligass');
+  
+    try {
+      const response = await fetch('http://127.0.0.1:3000/ligas');
+      const data = await response.json();
+  
+      selectElement.innerHTML = ''; // Limpa o conteúdo do select
+  
+      // Adiciona a opção "Selecione uma Liga" no início do select
+      const selectOption = document.createElement('option');
+      selectOption.value = ''; // Defina um valor vazio ou o mais adequado para esta opção
+      selectOption.textContent = 'Selecione uma Liga'; // Texto exibido para a opção
+      selectElement.appendChild(selectOption);
+  
+      // Itera sobre os dados das ligas e adiciona as opções no select
       data.ligas.forEach(liga => {
         const option = document.createElement('option');
         option.value = liga.LigaID;
@@ -57,31 +92,31 @@ async function carregarDados() {
     }
   }
   
-  async function carregarDivisoes() {
-    const selectElement = document.getElementById('divisoes');
+  
+  async function carregarDivisoes(idLiga) {
+    const selectDivisoes = document.getElementById('divisoes');
   
     try {
-      const response = await fetch('http://127.0.0.1:3000/divisoes');
+      const response = await fetch(`http://127.0.0.1:3000/divisoes/${idLiga}`);
       const data = await response.json();
   
-      selectElement.innerHTML = '';
+      selectDivisoes.innerHTML = '<option value="">Selecione Divisão</option>'; // Adiciona a opção "Selecione Divisão" no início
   
       data.divisoes.forEach(divisao => {
         const option = document.createElement('option');
         option.value = divisao.DivisaoID;
         option.textContent = divisao.NomeDivisao;
-        selectElement.appendChild(option);
+        selectDivisoes.appendChild(option);
       });
   
     } catch (error) {
       console.error('Erro ao carregar as divisões:', error);
-      selectElement.innerHTML = '<option value="">Erro ao carregar as divisões</option>';
+      selectDivisoes.innerHTML = '<option value="">Erro ao carregar as divisões</option>';
     }
   }
-  
-  window.onload = carregarDados;
 
   const formClube = document.getElementById('inserirClubeForm');
+  console.log(formClube);
 
   formClube.addEventListener('submit', async (event) => {
   event.preventDefault(); // Evita o envio padrão do formulário
@@ -119,12 +154,11 @@ async function carregarDados() {
     });
 
     // Restante do código para manipular a resposta...
-    console.log('Divisão inserida com sucesso!');
+    console.log('Clube inserida com sucesso!');
     limparCampos(); // Chama a função para limpar os campos do formulário
-    window.location.href = "/InserirLeagues";
   } catch (error) {
     console.error('Erro:', error);
-    // Adicione aqui o código para lidar com erros, se necessário
+    alert('Erro ao criar clube. Tente novamente.');
   }
 });
   
@@ -138,3 +172,23 @@ function limparCampos() {
   document.getElementById('dinheiroTransferencias').value = '';
   document.getElementById('nomedivisao').value = '';
 }
+
+// Seu código existente...
+
+window.onload = async () => {
+  await carregarLigas();
+  await carregarDivisoes();
+  await carregarLigas2();
+
+  const ligasSelect = document.getElementById('ligass');
+  ligasSelect.addEventListener('change', async () => {
+    const selectedLeague = ligasSelect.value;
+    await carregarDivisoes(selectedLeague);
+  });
+
+  carregarDados(); // Adicione esta linha para configurar o listener do formulário de inserção de divisões
+};
+
+
+});
+
