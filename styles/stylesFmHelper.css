@@ -1,0 +1,331 @@
+
+  
+  /* Estilização do seletor de gênero */
+  label[for="genre"] {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  /* Estilização dos seletores de liga e divisão */
+  select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  select#genre {
+    padding: 8px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  
+  /* Estilos para a barra de navegação */
+  nav {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Centraliza os itens na barra de navegação */
+  }
+  
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  /* Restante dos estilos */
+  
+  
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* ... */
+  .movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  
+/* Estilização das equipes */
+.teams-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Exibe as equipes em grupos de 4 colunas */
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Estilização das equipes */
+.team {
+    border: 1px solid #525252;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    max-width: 500px; /* Largura máxima para as equipes */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    text-align: center; /* Centraliza o texto */
+}
+
+.team img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1; /* Mantém a proporção quadrada da imagem */
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.team-details {
+    padding: 20px;
+    width: 100%; /* Definir a largura total */
+}
+
+.team-details h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Estilização das equipes */
+.team-details p {
+    margin: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilos para o container da equipe aleatória */
+#randomTeamResult {
+    margin-top: 20px; /* Defina a margem superior desejada */
+}
+  
+  .containerEdit {
+    width: 60%;
+    margin: 30px auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .profile-info {
+    margin-top: 20px;
+  }
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px; /* Centraliza verticalmente */
+    display: block;
+    border: 2px solid #ccc;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  input[type="text"] {
+    width: calc(35% - 18px);
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #222222;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  input[type="submit"]:hover {
+    background-color: #2c2c2c;
+  }
+  
+  input[type="file"] {
+    display: none; /* Oculta o botão de seleção de arquivo padrão */
+  }
+  
+  label[for="avatar"] {
+    padding: 10px 20px; /* Adiciona preenchimento ao rótulo para simular um botão */
+    background-color: #222222; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Adiciona bordas arredondadas */
+    cursor: pointer; /* Mostra o cursor ao passar por cima */
+    transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor */
+    display: inline-block; /* Exibe como um elemento de bloco */
+    margin-bottom: 10px; /* Adiciona espaçamento inferior */
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  label[for="avatar"]:hover {
+    background-color: #2c2c2c; /* Cor de fundo ao passar o mouse por cima */
+  }
+  
+  /* Estilo para diminuir o tamanho da imagem e adicionar bordas arredondadas */
+  .profile-image img {
+    width: 100px; /* Largura desejada */
+    height: 100px; /* Altura desejada */
+    border-radius: 50%; /* Transforma a imagem em um círculo */
+  }
+  
+  .containerForm {
+    width: 60%;
+    margin: 30px auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-info {
+    margin-top: 20px;
+  }
+  
+  /* Estilização para a imagem do perfil */
+  img.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px; /* Centraliza verticalmente */
+    display: block;
+    border: 2px solid #ccc;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    width: calc(35% - 18px);
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #222222;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #2c2c2c;
+  }
+  
+  input[type="file"] {
+    display: none; /* Oculta o botão de seleção de arquivo padrão */
+  }
+  
+  /* Estilo para o rótulo que simula o botão de seleção de arquivo */
+  label[for="avatar"] {
+    padding: 10px 20px; /* Adiciona preenchimento ao rótulo para simular um botão */
+    background-color: #222222; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Adiciona bordas arredondadas */
+    cursor: pointer; /* Mostra o cursor ao passar por cima */
+    transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor */
+    display: inline-block; /* Exibe como um elemento de bloco */
+    margin-bottom: 10px; /* Adiciona espaçamento inferior */
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  label[for="avatar"]:hover {
+    background-color: #2c2c2c; /* Cor de fundo ao passar o mouse por cima */
+  }
+  
+  /* Estilização do botão de equipe aleatória */
+  #randomTeamButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2c2c2c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+  }
+  
+  #randomTeamButton:hover {
+    background-color: #4e4e4e;
+  }
+  

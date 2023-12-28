@@ -1,0 +1,305 @@
+/* Estilos específicos para a página 'Sobre' */
+.about-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    text-align: justify;
+    background-color: #f9f9f9; /* Fundo mais claro */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 30px; /* Mais espaço interno */
+  }
+  
+  h2 {
+    font-size: 32px; /* Tamanho maior para o título */
+    color: #333;
+    margin-bottom: 20px; /* Mais espaço após o título */
+  }
+  
+  p {
+    font-size: 18px; /* Tamanho maior para o texto */
+    line-height: 1.8; /* Espaçamento entre linhas aumentado */
+    margin-bottom: 30px; /* Mais espaço após cada parágrafo */
+  }
+
+/* Estilização do botão "Filme Aleatório" */
+button#randomMovieButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ccc;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 5px;
+  }
+  
+  button#randomMovieButton:hover {
+    background-color: #e68a00;
+  }
+  
+  /* Estilos para o resultado do filme aleatório */
+  #randomMovieResult {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Estilização do seletor de gênero */
+  label[for="genre"] {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  select#genre {
+    padding: 8px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  
+  /* Estilos para a barra de navegação */
+  nav {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Centraliza os itens na barra de navegação */
+  }
+  
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links li {
+    margin-right: 20px;
+  }
+  
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  /* Restante dos estilos */
+  
+  
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* ... */
+  .movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  
+  .movie {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+  
+  .movie img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .movie-details {
+    margin-top: 10px;
+  }
+  
+  .random-movie {
+    text-align: center;
+    margin: 20px auto;
+  }
+  
+  .random-movie .movie-details h3 {
+    font-weight: bold; /* Mantém o título do filme em negrito */
+  }
+  
+  .random-movie .movie-details p {
+    font-weight: normal; /* Remove o negrito do restante do texto */
+  }
+  
+  .random-movie .movie-poster {
+    max-width: 300px; /* Define a largura máxima da imagem */
+    height: auto; /* Garante que a altura seja ajustada proporcionalmente */
+    display: block; /* Remove o espaçamento adicional ao redor da imagem */
+    margin: 0 auto; /* Centraliza horizontalmente */
+  }
+  
+  /* Adicione ao seu arquivo styles.css */
+  
+  /* Container das equipes */
+  .teams-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  
+  /* Estilo para cada equipe individual */
+  .team {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Estilo para a imagem (emblema) da equipe */
+  .team img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Estilo para os detalhes da equipe */
+  .team-details {
+    padding: 10px;
+  }
+  
+  /* Estilo para o título da equipe */
+  .team-details h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo para informações da equipe */
+  .team-details p {
+    margin: 0;
+  }
+  
+  /* Estilos para o container da equipe aleatória */
+  #randomTeamResult {
+    margin-top: 20px; /* Defina a margem superior desejada */
+  }
+  
+  .containerEdit {
+    width: 60%;
+    margin: 30px auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .profile-info {
+    margin-top: 20px;
+  }
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px; /* Centraliza verticalmente */
+    display: block;
+    border: 2px solid #ccc;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="file"] {
+    margin-bottom: 10px;
+  }
+  input[type="text"] {
+    width: calc(35% - 18px);
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #222222;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  input[type="submit"]:hover {
+    background-color: #2c2c2c;
+  }
+  
+  input[type="file"] {
+    display: none; /* Oculta o botão de seleção de arquivo padrão */
+  }
+  
+  label[for="avatar"] {
+    padding: 10px 20px; /* Adiciona preenchimento ao rótulo para simular um botão */
+    background-color: #222222; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Adiciona bordas arredondadas */
+    cursor: pointer; /* Mostra o cursor ao passar por cima */
+    transition: background-color 0.3s ease; /* Adiciona transição suave na mudança de cor */
+    display: inline-block; /* Exibe como um elemento de bloco */
+    margin-bottom: 10px; /* Adiciona espaçamento inferior */
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  label[for="avatar"]:hover {
+    background-color: #2c2c2c; /* Cor de fundo ao passar o mouse por cima */
+  }
+  
+  /* Estilo para diminuir o tamanho da imagem e adicionar bordas arredondadas */
+  .profile-image img {
+    width: 100px; /* Largura desejada */
+    height: 100px; /* Altura desejada */
+    border-radius: 50%; /* Transforma a imagem em um círculo */
+  }
+  
+

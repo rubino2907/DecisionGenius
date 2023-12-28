@@ -23,6 +23,26 @@ async function carregarLigas() {
 
 
 window.onload = async () => {
+  fetch('/getUserDetails', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Detalhes do usuário recebidos:', data);
+
+    // Obtém o UtilizadorID do usuário
+    const userID = data.UtilizadorID;
+
+    // Chama a função para carregar a imagem do usuário usando o UtilizadorID
+    loadUserImage(userID);
+  })
+  .catch(error => {
+    console.error('Erro ao obter os detalhes do usuário:', error);
+  });
+
   await carregarLigas();
 
   const ligasSelect = document.getElementById('ligas');
@@ -98,8 +118,21 @@ function displayTeams(teams) {
     teamContainer.classList.add('team');
 
     const badge = document.createElement('div');
-    badge.innerHTML = team.EmblemaURL; // Verifique se o EmblemaURL está retornando corretamente o SVG
     badge.classList.add('team-badge');
+
+    if (team.EmblemaURL) {
+      const img = document.createElement('img');
+      img.src = team.EmblemaURL;
+      img.alt = 'Emblema do Clube';
+
+      // Definindo o tamanho da imagem (largura e altura)
+      img.style.width = '250px'; // Adapte o tamanho conforme necessário
+      img.style.height = '250px'; // Adapte o tamanho conforme necessário
+
+      badge.appendChild(img);
+    } else {
+      badge.textContent = 'Emblema não disponível';
+    }
 
     const teamInfo = document.createElement('div');
     teamInfo.classList.add('team-info');
@@ -111,10 +144,10 @@ function displayTeams(teams) {
     participation.textContent = 'Participação Europeia: ' + team.ParticipacaoEuropeia;
 
     const transferBalance = document.createElement('p');
-    transferBalance.textContent = 'Saldo de Transferências: ' + team.SaldoTransferencias;
+    transferBalance.textContent = 'Saldo de Transf: ' + team.SaldoTransferencias;
 
     const transferMoney = document.createElement('p');
-    transferMoney.textContent = 'Dinheiro para Transferências: ' + team.DinheiroTransferencias;
+    transferMoney.textContent = 'Dinheiro para Transf: ' + team.DinheiroTransferencias;
 
     teamInfo.appendChild(teamName);
     teamInfo.appendChild(participation);
@@ -136,8 +169,17 @@ function displayRandomTeam(team) {
   teamContainer.classList.add('team');
 
   const badge = document.createElement('div');
-  badge.innerHTML = team.EmblemaURL; // Verifique se o EmblemaURL está retornando corretamente o SVG
   badge.classList.add('team-badge');
+
+  const img = document.createElement('img');
+  img.src = team.EmblemaURL;
+  img.alt = 'Emblema do Clube';
+
+  // Definindo o tamanho da imagem (largura e altura)
+  img.style.width = '250px'; // Adapte o tamanho conforme necessário
+  img.style.height = '250px'; // Adapte o tamanho conforme necessário
+
+  badge.appendChild(img);
 
   const teamInfo = document.createElement('div');
   teamInfo.classList.add('team-info');
@@ -166,6 +208,17 @@ function displayRandomTeam(team) {
 }
 
 
+function loadUserImage(userID) {
+  fetch(`/getUserImage/${userID}`)
+    .then(response => response.json())
+    .then(data => {
+      let imagePath = data.imagePath;
+      imagePath = imagePath.replace(/\\/g, '/'); // Substituir barras invertidas por barras normais
 
-
-
+      const userImage = document.getElementById('userImage');
+      userImage.src = imagePath; // Define o caminho da imagem do usuário
+    })
+    .catch(error => {
+      console.error('Erro ao carregar a imagem:', error);
+    });
+}

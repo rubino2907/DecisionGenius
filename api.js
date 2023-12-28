@@ -65,12 +65,9 @@ app.use(express.static(path.join(__dirname, "styles"))); // Servir arquivos est�
 app.use(express.static(path.join(__dirname, "scripts"))); // Servir arquivos estáticos na rota '/scripts'
 app.use(express.urlencoded({ extended: true })); // Middleware para lidar com dados do formulário
 
-// Rota para a página de login
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.render('home');
 });
-
-
 
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "registo.html"));
@@ -80,16 +77,17 @@ app.get('/profile', (req, res) => {
   const user = req.session.user;
 
   if (user) {
-    // Acesso aos detalhes do usuário na sessão, incluindo UtilizadorID
     res.render('profile', {
       UtilizadorID: user.UtilizadorID,
       nome: user.Nome,
-      email: user.Email
+      email: user.Email,
+      isAdmin: user.isAdmin // Certifique-se de passar a propriedade isAdmin para o template
     });
   } else {
     res.redirect('/');
   }
 });
+
 
 // Rota '/editProfile' também pode ser ajustada da mesma forma
 app.get('/editProfile', (req, res) => {
@@ -99,7 +97,8 @@ app.get('/editProfile', (req, res) => {
     res.render('editProfile', {
       UtilizadorID: user.UtilizadorID,
       nome: user.Nome,
-      email: user.Email
+      email: user.Email,
+      isAdmin: user.isAdmin
     });
   } else {
     res.redirect('/');
@@ -114,22 +113,80 @@ app.get('/fmInsertData', (req, res) => {
     res.render('fmInsertData', {
       UtilizadorID: user.UtilizadorID,
       nome: user.Nome,
-      email: user.Email
+      email: user.Email,
+      isAdmin: user.isAdmin
     });
   } else {
     res.redirect('/');
   }
 });
 
-app.get("/fmHelper", (req, res) => {
-  res.sendFile(path.join(__dirname, "fmHelper.html"));
+app.get('/dashboardAdmin', (req, res) => {
+  const user = req.session.user;
+
+  if (user && user.isAdmin === 1) { // Verifica se o usuário é um administrador
+    // Acesso aos detalhes do usuário na sessão, incluindo UtilizadorID
+    res.render('dashboardAdmin', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email,
+      isAdmin: user.isAdmin
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
-app.get("/filmes", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// Rota '/editProfile' também pode ser ajustada da mesma forma
+app.get('/about', (req, res) => {
+  const user = req.session.user;
+
+  if (user) {
+    res.render('about', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email,
+      isAdmin: user.isAdmin
+    });
+  } else {
+    res.redirect('/');
+  }
 });
-app.get("/dashboardAdmin", (req, res) => {
-  res.sendFile(path.join(__dirname, "DashboardAdmin.html"));
+
+// Rota '/editProfile' também pode ser ajustada da mesma forma
+app.get('/filmes', (req, res) => {
+  const user = req.session.user;
+
+  if (user) {
+    res.render('filmes', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email,
+      isAdmin: user.isAdmin
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+// Rota '/editProfile' também pode ser ajustada da mesma forma
+app.get('/fmHelper', (req, res) => {
+  const user = req.session.user;
+
+  if (user) {
+    res.render('fmHelper', {
+      UtilizadorID: user.UtilizadorID,
+      nome: user.Nome,
+      email: user.Email,
+      isAdmin: user.isAdmin
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "login.html"));
 });
 
 app.listen(3000, () => {
@@ -165,7 +222,7 @@ app.post("/register", (req, res) => {
         res.status(500).send("Erro ao registrar usuário");
       } else {
         console.log("Usuário registrado com sucesso!");
-        res.redirect("/"); // Redireciona para a página de login
+        res.redirect("/login"); // Redireciona para a página de login
       }
     }
   );
@@ -179,7 +236,6 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-// Rota para o processo de login
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -201,21 +257,33 @@ app.post('/login', (req, res) => {
       const user = results[0];
 
       console.log('UtilizadorID:', user.UtilizadorID);
-      // Após a verificação do login ser bem-sucedida, armazene os detalhes do usuário na sessão
-      req.session.user = {
-        UtilizadorID: user.UtilizadorID,
-        Nome: user.Nome,
-        Email: user.Email
-      };
-      res.redirect('/profile');
+
+      // Verifica se o usuário é um administrador (isAdmin igual a 1)
+      if (user.isAdmin === 1) {
+        // Dentro da rota de login, após verificar as credenciais e determinar que o login é bem-sucedido:
+        req.session.user = {
+          UtilizadorID: user.UtilizadorID,
+          Nome: user.Nome,
+          Email: user.Email,
+          isAdmin: user.isAdmin
+        };
+        // Redireciona para a rota da DashboardAdmin se o usuário for um administrador
+        res.redirect('/dashboardAdmin');
+      } else {
+        // Se não for administrador, armazene os detalhes do usuário na sessão e redirecione para o perfil
+        req.session.user = {
+          UtilizadorID: user.UtilizadorID,
+          Nome: user.Nome,
+          Email: user.Email,
+          isAdmin: user.isAdmin
+        };
+        res.redirect('/profile');
+      }
     } else {
       return res.status(401).send('Credenciais inválidas');
     }
   });
 });
-
-
-
 
 app.post("/inserirDataLeagues", (req, res) => {
   const { nomeliga } = req.body;
@@ -244,8 +312,62 @@ app.post("/inserirDataLeagues", (req, res) => {
   );
 });
 
+//USERSSSSSSSSSSSSSSSSSS
 app.get('/getUsers', (req, res) => {
   connection.query('SELECT UtilizadorID, Nome, Email FROM Utilizadores', (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao obter as users' });
+    } else {
+      res.json({ users: results }); // Retorna diretamente os resultados da consulta SQL
+    }
+  });
+});
+
+// Configuração de uma rota para eliminar um usuário pelo UtilizadorID
+app.delete('/eliminarUser/:UtilizadorID', (req, res) => {
+  const { UtilizadorID } = req.params;
+
+  // Aqui você usaria o UtilizadorID para eliminar o usuário do seu banco de dados
+  // Por exemplo:
+  connection.query('DELETE FROM Utilizadores WHERE UtilizadorID = ?', UtilizadorID, (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao eliminar o usuário' });
+    } else {
+      res.status(200).json({ message: 'Usuário eliminado com sucesso' });
+    }
+  });
+});
+
+// Configuração de uma rota para tornar um usuário administrador pelo UtilizadorID
+app.put('/TornarAdmin/:UtilizadorID', (req, res) => {
+  const { UtilizadorID } = req.params;
+
+  // Query para atualizar o status isAdmin para 1 para o usuário com o UtilizadorID fornecido
+  connection.query('UPDATE Utilizadores SET isAdmin = 1 WHERE UtilizadorID = ?', UtilizadorID, (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao tornar o usuário administrador' });
+    } else {
+      res.status(200).json({ message: 'Usuário tornou-se administrador com sucesso' });
+    }
+  });
+});
+
+// Configuração de uma rota para tornar um usuário administrador pelo UtilizadorID
+app.put('/TirarAdmin/:UtilizadorID', (req, res) => {
+  const { UtilizadorID } = req.params;
+
+  // Query para atualizar o status isAdmin para 1 para o usuário com o UtilizadorID fornecido
+  connection.query('UPDATE Utilizadores SET isAdmin = 0 WHERE UtilizadorID = ?', UtilizadorID, (error, results) => {
+    if (error) {
+      res.status(500).json({ error: 'Erro ao tornar o usuário administrador' });
+    } else {
+      res.status(200).json({ message: 'Usuário tornou-se administrador com sucesso' });
+    }
+  });
+});
+
+app.get('/getUserAdmin', (req, res) => {
+  connection.query('SELECT UtilizadorID, Nome, Email FROM Utilizadores WHERE isAdmin = 1', (error, results) => {
     if (error) {
       res.status(500).json({ error: 'Erro ao obter as users' });
     } else {
@@ -266,7 +388,6 @@ app.get('/getUserDetails', (req, res) => {
     res.status(404).json({ error: 'Detalhes do usuário não encontrados' });
   }
 });
-
 
 app.get('/ligas', (req, res) => {
   connection.query('SELECT LigaID, NomeLiga FROM Ligas', (error, results) => {

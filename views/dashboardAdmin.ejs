@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Decide Genius - Painel de Administração</title>
+  <link rel="stylesheet" href="stylesAdmin.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/profile">
+        <div class="profile-image">
+          <img id="userImage" src="" alt="Imagem do Usuário" />
+        </div>
+      </a>
+      <ul class="nav-links">
+        <% if (isAdmin === 1) { %>
+          <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+        <% } %>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="/about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <div class="container">
+      <h1 class="logo">Decide Genius</h1>
+    </div>
+    <h2>Painel de Administração</h2>
+  </header>
+
+  <h2>Tabela de Users</h2>
+
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th class="actions-column">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Os dados dos usuários serão preenchidos aqui -->
+    </tbody>
+  </table>
+
+  <h2>Tabela de Admin Users</h2>
+
+  <table id="userAdminsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th class="actions-column">Ações</th>
+      </tr>
+    </thead>
+    <tbody id="userAdminsTableBody">
+      <!-- Os dados dos usuários serão preenchidos aqui dinamicamente -->
+    </tbody>
+  </table>
+
+  <h2>Inserir Dados FM</h2>
+
+  <button class="custom-button" onclick="location.href='/fmInsertData'">Inserir Ligas</button>
+
+  <script src="scriptsAdmin.js"></script>
+  <script src="scriptsAdmin2.js"></script>
+</body>
+</html>

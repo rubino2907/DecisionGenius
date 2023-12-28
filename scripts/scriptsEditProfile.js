@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
   .then(data => {
     const usernameField = document.getElementById('username');
     usernameField.innerText = data.nome || 'Nome do Usuário';
+
+    // Obtém o UtilizadorID do usuário
+  const userID = data.UtilizadorID;
+
+  // Chama a função para carregar a imagem do usuário usando o UtilizadorID
+  loadUserImage(userID);
   })
   .catch(error => {
     console.error('Erro ao obter os detalhes do usuário:', error);
@@ -76,3 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // avatarPreview.src = '#'; // Limpar a imagem do preview
   });
 });
+
+function loadUserImage(userID) {
+  fetch(`/getUserImage/${userID}`)
+    .then(response => response.json())
+    .then(data => {
+      let imagePath = data.imagePath;
+      imagePath = imagePath.replace(/\\/g, '/'); // Substituir barras invertidas por barras normais
+
+      const userImage = document.getElementById('userImage');
+      userImage.src = imagePath; // Define o caminho da imagem do usuário
+    })
+    .catch(error => {
+      console.error('Erro ao carregar a imagem:', error);
+    });
+}

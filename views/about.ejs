@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sobre o Decide Genius</title>
+  <link rel="stylesheet" href="stylesAbout.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/profile">
+          <div class="profile-image">
+            <img id="userImage" src="" alt="Imagem do Usuário" />
+          </div>
+        </a>
+        <ul class="nav-links">
+          <% if (isAdmin === 1) { %>
+            <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+          <% } %>
+          <li><a href="/filmes">Filmes</a></li>
+          <li><a href="/fmHelper">Ligas</a></li>
+          <li><a href="/about">Sobre</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="about-container">
+      <h2>Sobre o Decide Genius</h2>
+      <p>O Decide Genius é uma plataforma dedicada a ajudar os usuários a escolherem filmes e equipes para o jogo FM24!</p>
+      <p>Nossa missão é fornecer recomendações de filmes com base nos gostos dos usuários, ajudando-os a descobrir ótimos filmes de acordo com seus gêneros preferidos.</p>
+      <p>Além disso, oferecemos uma função que auxilia os jogadores de FM24 a escolherem uma equipe com base na liga e divisão desejadas, facilitando a criação de um save no jogo.</p>
+      <p>Esperamos que nossa plataforma seja útil para você. Explore e aproveite!</p>
+      <p>Para mais informações, entre em contato conosco em decidegenius@example.com.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Decide Genius. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="scriptsAbout.js"></script>
+
+</body>
+</html>

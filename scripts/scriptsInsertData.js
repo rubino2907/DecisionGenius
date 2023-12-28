@@ -119,42 +119,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log(formClube);
 
   formClube.addEventListener('submit', async (event) => {
-  event.preventDefault(); // Evita o envio padrão do formulário
+    event.preventDefault(); // Evita o envio padrão do formulário
 
-  const nomeclube = document.getElementById('nomeclube').value;
-  const emblemaurl = document.getElementById('emblemaurl').value;
-  const divisaoSelecionada = document.querySelector('select[name="divisoes"]').value;
-  const participacaoEuropeia = document.getElementById('participacaoEuropeia').value;
-  const saldoTransferencias = document.getElementById('saldoTransferencias').value;
-  const dinheiroTransferencias = document.getElementById('dinheiroTransferencias').value;
+
+    const nomeclube = document.getElementById('nomeclube').value;
+    const avatarInput = document.getElementById('avatar');
+    const avatarFile = avatarInput.files[0]; // Obtém o arquivo do emblema
+
+    let emblemaURL = null;
+    if (avatarFile) {
+      emblemaURL = avatarFile.name; // Define o nome do arquivo como EmblemaURL
+    }
+
+    const divisaoSelecionada = document.querySelector('select[name="divisoes"]').value;
+    const participacaoEuropeia = document.getElementById('participacaoEuropeia').value;
+    const saldoTransferencias = document.getElementById('saldoTransferencias').value;
+    const dinheiroTransferencias = document.getElementById('dinheiroTransferencias').value;
+
+  
 
   console.log('Nome do Clube:', nomeclube);
-  console.log('Emblema URL:', emblemaurl);
+  console.log('Caminho do Emblema:', emblemaURL);
   console.log('Divisão Selecionada:', divisaoSelecionada); // Certifique-se de que a divisão está sendo capturada corretamente
   console.log('Participação em Competições Europeias:', participacaoEuropeia);
   console.log('Saldo para Transferências:', saldoTransferencias);
   console.log('Dinheiro Disponível para Transferências:', dinheiroTransferencias);
 
-  const dadosClube = {
-    nomeclube: nomeclube,
-    emblemaurl: emblemaurl,
-    divisaoSelecionada: divisaoSelecionada, // Certifique-se de que o nome da propriedade corresponde ao que é esperado no servidor
-    participacaoEuropeia: participacaoEuropeia,
-    saldoTransferencias: saldoTransferencias,
-    dinheiroTransferencias: dinheiroTransferencias
-  };
+  const formData = new FormData();
+    formData.append('nomeclube', nomeclube);
+    formData.append('avatar', avatarFile); // Adiciona o arquivo do emblema ao FormData
+    formData.append('emblemaURL', emblemaURL); // Adiciona o caminho do emblema ao FormData
+    formData.append('divisaoSelecionada', divisaoSelecionada);
+    formData.append('participacaoEuropeia', participacaoEuropeia);
+    formData.append('saldoTransferencias', saldoTransferencias);
+    formData.append('dinheiroTransferencias', dinheiroTransferencias);
 
-  try {
-    const response = await fetch('http://127.0.0.1:3000/inserirDataClube', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dadosClube)
-    });
+    try {
+      const response = await fetch('http://127.0.0.1:3000/inserirDataClube', {
+        method: 'POST',
+        body: formData
+      });
 
     // Restante do código para manipular a resposta...
-    console.log('Clube inserida com sucesso!');
+    console.log('Clube inserido com sucesso!');
     limparCampos(); // Chama a função para limpar os campos do formulário
   } catch (error) {
     console.error('Erro:', error);
@@ -165,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function limparCampos() {
   document.getElementById('nomeclube').value = '';
-  document.getElementById('emblemaurl').value = '';
+  document.getElementById('avatar').value = '';
   document.getElementById('divisoes').value = ''; // Limpar o campo de divisões
   document.getElementById('participacaoEuropeia').value = '';
   document.getElementById('saldoTransferencias').value = '';

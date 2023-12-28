@@ -9,12 +9,18 @@
 <body>
   <nav>
     <div class="container">
+      <a href="/profile">
+        <div class="profile-image">
+          <img id="userImage" src="" alt="Imagem do Usuário" />
+        </div>
+      </a>
       <ul class="nav-links">
-        <li><a href="/dashboardAdmin">Home</a></li>
+        <% if (isAdmin === 1) { %>
+          <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+        <% } %>
         <li><a href="/filmes">Filmes</a></li>
         <li><a href="/fmHelper">Ligas</a></li>
-        <li><a href="/profile">Perfil</a></li>
-        <li><a href="#about">Sobre</a></li>
+        <li><a href="/about">Sobre</a></li>
       </ul>
     </div>
   </nav>
@@ -56,7 +62,7 @@
       <h3>Inserir Clube</h3>
       <form id="inserirClubeForm" method="POST" action="/inserirDataClube" enctype="multipart/form-data">
           <label>ClubName: <input type="text" class="ClubName" id="nomeclube" name="nomeclube" required/></label>
-          <label>Emblema: <input type="file" class="Emblema" id="emblemaurl" name="avatar" accept="image/*" required/></label>
+          <label>Emblema: <input type="file" id="avatar" name="avatar"></label>
           <label>Selecione uma Liga:</label>
           <select id="ligass">
             <option>Ligas</option>

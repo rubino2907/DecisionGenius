@@ -75,11 +75,13 @@
   <nav>
     <div class="container">
       <ul class="nav-links">
-          <li><a href="/dashboardAdmin">Home</a></li>
+          <% if (isAdmin === 1) { %>
+            <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+          <% } %>
           <li><a href="/filmes">Filmes</a></li>
           <li><a href="/fmHelper">Ligas</a></li>
           <li><a href="/profile">Perfil</a></li>
-          <li><a href="#about">Sobre</a></li>
+          <li><a href="/about">Sobre</a></li>
         <!-- Adicione mais links conforme necessário -->
       </ul>
     </div>
