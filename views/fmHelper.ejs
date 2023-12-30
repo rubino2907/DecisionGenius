@@ -7,23 +7,24 @@
   <link rel="stylesheet" href="stylesFmHelper.css">
 </head>
 <body>
-    <nav>
-        <div class="container">
-          <a href="/profile">
-            <div class="profile-image">
-              <img id="userImage" src="" alt="Imagem do Usuário" />
-            </div>
-          </a>
-          <ul class="nav-links">
-            <% if (isAdmin === 1) { %>
-              <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
-            <% } %>
-            <li><a href="/filmes">Filmes</a></li>
-            <li><a href="/fmHelper">Ligas</a></li>
-            <li><a href="/about">Sobre</a></li>
-          </ul>
+  <nav>
+    <div class="container">
+      <a href="/profile">
+        <div class="profile-image">
+          <img id="userImage" src="" alt="Imagem do Usuário" />
         </div>
-      </nav>
+      </a>
+      <ul class="nav-links">
+        <% if (isAdmin === 1) { %>
+          <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+        <% } %>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/series">Series</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="/about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <header>
     <h1 class="logo">Decide Genius</h1>

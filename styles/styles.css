@@ -379,3 +379,71 @@ label[for="avatar"]:hover {
 #randomTeamButton:hover {
   background-color: #4e4e4e;
 }
+
+/* Estilização para contêiner de séries */
+.series-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Estilização para cada item de série */
+.serie {
+  flex: 0 0 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.serie img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.serie-details {
+  margin-top: 10px;
+}
+
+/* Estilo para a seção de série aleatória */
+.random-serie {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.random-serie .serie-details h3 {
+  font-weight: bold; /* Mantém o título da série em negrito */
+}
+
+.random-serie .serie-details p {
+  font-weight: normal; /* Remove o negrito do restante do texto */
+}
+
+.random-serie .serie-poster {
+  max-width: 300px; /* Define a largura máxima da imagem */
+  height: auto; /* Garante que a altura seja ajustada proporcionalmente */
+  display: block; /* Remove o espaçamento adicional ao redor da imagem */
+  margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Estilização do botão de série aleatória */
+.randomSerieButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ccc;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+
+.randomSerieButton:hover {
+  background-color: #4e4e4e;
+}
+

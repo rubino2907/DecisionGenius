@@ -15,6 +15,7 @@ const filmesRoute = require('./routes/filmesRoute');
 const fmHelperRoute = require('./routes/fmHelperRoute');
 const jogoGalo = require('./routes/jogoGaloRoute');
 const jogoForca = require('./routes/jogoForcaRoute');
+const series = require('./routes/seriesRoute');
 
 const path = require('path');
 const connection = require('./db'); // Importe a conexão do arquivo db.js
@@ -85,6 +86,7 @@ app.use(filmesRoute);
 app.use(fmHelperRoute);
 app.use(jogoGalo);
 app.use(jogoForca);
+app.use(series);
 
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));

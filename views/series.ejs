@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Decide Genius</title>
+  <title>Decide Genius - Séries</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,27 +27,25 @@
 
   <header> 
     <h1 class="logo">Decide Genius</h1>
-    <h1>Explore nossa vasta coleção de filmes!</h1>
+    <h1>Explore nossa vasta coleção de séries!</h1>
   </header>
 
-<!-- ... -->
-<main>
-  <label for="genre">Filtrar por gênero:</label>
-  <select id="genre">
-    <option value="all">Todos</option>
-    <!-- Opções de gênero carregadas dinamicamente -->
-  </select>
+  <main>
+    <label for="genre">Filtrar por gênero:</label>
+    <select id="genre">
+      <option value="all">Todos</option>
+      <!-- Opções de gênero carregadas dinamicamente -->
+    </select>
 
-  <div class="movies-container" id="movieList">
-    <!-- Aqui é onde os filmes serão exibidos -->
-  </div>
+    <div class="series-container" id="seriesList">
+      <!-- Aqui é onde as séries serão exibidas -->
+    </div>
   
-  <button id="randomMovieButton">Filme Aleatório</button>
+    <button id="randomSerieButton" class="randomSerieButton">Série Aleatória</button>
 
-  <div id="randomMovieResult"></div>
-</main>
-<!-- ... -->
+    <div id="randomSerieResult"></div>
+  </main>
 
-  <script src="scripts.js"></script>
+  <script src="scriptsSeries.js"></script>
 </body>
 </html>
