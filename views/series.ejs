@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Decide Genius - Séries</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stylesSeries.css">
 </head>
 <body>
   <nav>
@@ -37,7 +38,7 @@
       <!-- Opções de gênero carregadas dinamicamente -->
     </select>
 
-    <div class="series-container" id="seriesList">
+    <div class="series-container" id="seriesList" >
       <!-- Aqui é onde as séries serão exibidas -->
     </div>
   
@@ -46,6 +47,17 @@
     <div id="randomSerieResult"></div>
   </main>
 
+  <div id="seriePopup" class="serie-popup">
+    <div class="serie-details-popup">
+      <h2 id="popupSerieTitle" class="popup-title"></h2>
+      <p id="popupSerieGenres" class="popup-genres"></p>
+      <p id="popupSerieOverview" class="popup-overview"></p>
+      <div id="youtubePlayer"></div>
+      <button id="closePopupButton" class="close-popup-button">Fechar</button>
+    </div>
+  </div>
+  
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="scriptsSeries.js"></script>
 </body>
 </html>

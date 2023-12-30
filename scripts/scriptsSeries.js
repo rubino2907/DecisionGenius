@@ -1,4 +1,5 @@
 const apiKey = '82c69a95563baea5f245619c3975f623';
+let player; // Declare a variável globalmente para armazenar o objeto do player do YouTube
 
 document.addEventListener('DOMContentLoaded', function() {
   fetch('/getUserDetails', {
@@ -209,3 +210,146 @@ randomSerieButton.addEventListener('click', function() {
 
 showSeries('all'); // Exibe todas as séries inicialmente
 
+// Função para obter os dados da série a partir do elemento clicado
+function getSeriesDataFromElement(element) {
+    const serieElement = element.closest('.serie'); // Encontra o elemento pai da série
+    const serieTitle = serieElement.querySelector('h3').textContent; // Obtém o título da série
+    const serieOverview = serieElement.querySelector('p:nth-child(3)').textContent; // Obtém a descrição da série
+    const serieGenres = serieElement.querySelector('p:nth-child(2)').textContent; // Obtém os gêneros da série
+  
+    return {
+      name: serieTitle,
+      overview: serieOverview,
+      genres: serieGenres.split(': ')[1].split(', '), // Separa os gêneros em um array
+      // Outros dados da série, se necessário
+    };
+  }
+
+  // Função para obter os detalhes da série (incluindo a URL do trailer)
+async function getSeriesDetails(serieId) {
+    try {
+      const response = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?api_key=${apiKey}`);
+      const data = await response.json();
+      return data || {};
+    } catch (error) {
+      console.error('Erro ao buscar detalhes da série:', error);
+      return {};
+    }
+  }
+
+// Obtém a referência para os elementos relevantes da popup
+const seriePopup = document.getElementById('seriePopup');
+const closePopupButton = document.getElementById('closePopupButton');
+
+// Adiciona evento de clique no botão de fechar a popup
+closePopupButton.addEventListener('click', () => {
+  seriePopup.style.display = 'none';
+});
+
+async function showSeriePopup(serie) {
+    try {
+      stopYouTubePlayer();
+      clearYouTubePlayer(); // Limpar o player antes de buscar um novo trailer
+      const serieDetails = await getSeriesDetails(serie.id);
+  
+      console.log('Nome da série:', serie.name);
+  
+      document.getElementById('popupSerieTitle').innerText = serie.name;
+      document.getElementById('popupSerieGenres').innerText = 'Gênero: ' + serie.genres.join(', ');
+      document.getElementById('popupSerieOverview').innerText = serie.overview;
+  
+      seriePopup.style.display = 'flex';
+  
+      const trailerLink = await searchTrailerOnYouTube(serie.name + ' official trailer');
+  
+      console.log('Trailer:', trailerLink); // Console log para o trailer
+  
+      if (trailerLink) {
+        clearYouTubePlayer(); // Limpar o player antes de criar um novo
+        createYouTubePlayer(trailerLink);
+      } else {
+        console.log('Nenhum trailer disponível para esta série.');
+      }
+    } catch (error) {
+      console.error('Erro ao exibir série na popup:', error);
+    }
+  }
+  
+// Evento de clique em um item da lista de séries para exibir a popup
+const seriesList = document.getElementById('seriesList');
+seriesList.addEventListener('click', (event) => {
+  const clickedElement = event.target.closest('.serie');
+  if (clickedElement) {
+    // Obter dados da série a partir do elemento clicado (você precisa implementar esta lógica)
+    const serieData = getSeriesDataFromElement(clickedElement);
+
+    // Chama a função para exibir a popup com os detalhes da série
+    showSeriePopup(serieData);
+  }
+});
+
+
+async function searchTrailerOnYouTube(serieName) {
+    try {
+      const apiKeyYoutube = 'AIzaSyDSi-5INoKN8feikWAumPXUbR_NhELtaJI'; // Substitua pelo seu YouTube API Key
+      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${serieName} serie official trailer&type=video&key=${apiKeyYoutube}`;
+  
+      const response = await fetch(searchUrl);
+      const data = await response.json();
+  
+      if (data.items && data.items.length > 0) {
+        const videoId = data.items[0].id.videoId;
+        return `https://www.youtube.com/watch?v=${videoId}`;
+      } else {
+        console.log('Nenhum trailer encontrado.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar o trailer:', error);
+      return null;
+    }
+  }
+
+  
+
+  function createYouTubePlayer(videoUrl) {
+    const playerElement = document.getElementById('youtubePlayer');
+    playerElement.innerHTML = ''; // Limpa o conteúdo do elemento antes de criar um novo player
+    
+    player = new YT.Player(playerElement, {
+      height: '315',
+      width: '560',
+      videoId: getVideoIdFromUrl(videoUrl),
+      playerVars: {
+        autoplay: 0,
+        modestbranding: 1,
+      },
+    });
+  }
+
+  function getVideoIdFromUrl(url) {
+    // Extrai o ID do vídeo do URL do YouTube
+    const urlParams = new URLSearchParams(new URL(url).search);
+    return urlParams.get('v');
+  }
+
+function stopYouTubePlayer() {
+  // Pausa o vídeo do player do YouTube somente se o player estiver definido e for uma função
+  if (player && typeof player.pauseVideo === 'function') {
+    player.pauseVideo();
+  }
+}
+
+function clearYouTubePlayer() {
+    if (player && typeof player.destroy === 'function') {
+      player.destroy(); // Destroi o player do YouTube
+      player = null; // Reseta a variável do player
+    }
+  }
+
+  closePopupButton.addEventListener('click', () => {
+    stopYouTubePlayer();
+    clearYouTubePlayer();
+    seriePopup.style.display = 'none';
+  });
+  
