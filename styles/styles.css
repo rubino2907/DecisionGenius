@@ -380,7 +380,6 @@ label[for="avatar"]:hover {
   background-color: #4e4e4e;
 }
 
-/* Estilização para contêiner de séries */
 .series-container {
   display: flex;
   flex-wrap: wrap;
@@ -389,12 +388,17 @@ label[for="avatar"]:hover {
   justify-content: flex-start;
 }
 
-/* Estilização para cada item de série */
 .serie {
-  flex: 0 0 calc(25% - 20px);
-  max-width: calc(25% - 20px);
+  flex: 0 0 calc(25% - 20px); /* Definição de 25% da largura para manter 4 séries por linha */
+  max-width: calc(25% - 20px); /* Definição de 25% da largura para manter 4 séries por linha */
   box-sizing: border-box;
   margin-bottom: 20px;
+  overflow: hidden; /* Oculta o texto que excede o limite de altura */
+}
+
+.serie .serie-details {
+  max-height: 300px; /* Limite de altura para os detalhes da série */
+  overflow: hidden; /* Oculta o texto que excede o limite de altura */
 }
 
 .serie img {
