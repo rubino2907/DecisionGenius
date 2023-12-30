@@ -1,0 +1,30 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .game-container {
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px; /* Largura máxima do contêiner */
+    width: 80%; /* Ajuste a largura conforme necessário */
+    font-size: 18px; /* Tamanho da fonte do contêiner */
+  }
+  
+  .word-input {
+    display: block;
+  }
+  
+  .word-display {
+    margin-top: 20px;
+    font-size: 28px; /* Tamanho da fonte para a palavra oculta */
+    font-weight: bold;
+  }
+  
+  .reset-button {
+    margin-bottom: 20px;
+  }

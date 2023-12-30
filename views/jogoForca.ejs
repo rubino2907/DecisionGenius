@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Decide Genius</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styleJogoForca.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/profile">
+        <div class="profile-image">
+          <img id="userImage" src="" alt="Imagem do Usuário" />
+        </div>
+      </a>
+      <ul class="nav-links">
+        <% if (isAdmin === 1) { %>
+          <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+        <% } %>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="/about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header> 
+    <h1 class="logo">Decide Genius</h1>
+    <h1>Explore nossa vasta coleção de filmes!</h1>
+  </header>
+
+  <div class="center-container">
+    <div class="game-container">
+      <h1>Jogo da Forca</h1>
+      <div class="reset-button">
+        <button onclick="resetGame()">Reiniciar Jogo</button>
+      </div>
+      <div class="word-input" id="wordInputSection">
+        <label for="wordInput">Insira a palavra:</label>
+        <input type="text" id="wordInput" placeholder="Digite a palavra">
+        <button onclick="startGame()">Iniciar Jogo</button>
+      </div>
+      <div class="word-display" id="wordDisplay"></div>
+      <div class="guesses-left">Tentativas Restantes: <span id="guessesLeft">6</span></div>
+      <div class="input-section">
+        <input type="text" id="letterInput" maxlength="1" placeholder="Digite uma letra">
+        <button onclick="guessLetter()">Chutar</button>
+      </div>
+      <div class="guessed-letters">Letras já chutadas: <span id="guessedLetters"></span></div>
+    </div>
+  </div>
+
+  <script src="scriptsJogoForca.js"></script>
+</body>
+</html>
