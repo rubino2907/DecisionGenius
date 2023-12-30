@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Informações da Liga</title>
+  <!-- Adicione seu arquivo de estilos -->
+  <link rel="stylesheet" href="/styleFM.css">
+  <link rel="stylesheet" href="/styleJogoGalo.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/profile">
+        <div class="profile-image">
+          <img id="userImage" src="" alt="Imagem do Usuário" />
+        </div>
+      </a>
+      <ul class="nav-links">
+        <% if (isAdmin === 1) { %>
+          <li><a href="/dashboardAdmin">DashboardAdmin</a></li>
+        <% } %>
+        <li><a href="/filmes">Filmes</a></li>
+        <li><a href="/fmHelper">Ligas</a></li>
+        <li><a href="/about">Sobre</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <h1 class="logo">Decide Genius</h1>
+    <h2>Explore informações sobre ligas esportivas e equipes!</h2>
+  </header>
+
+  <div id="tabuleiro">
+    <div id="idTitle" class="title">
+      Tipo de Jogo
+    </div>
+    <div id="gametype">
+      <button id="btnOnePlayer" type="button" class="btnplayer" onclick="oneplayer()">1 Jogador</button>
+      <button id="btnTwoPlayer" type="button" class="btnplayer" onclick="twoplayer()">2 Jogadores</button>
+    </div>
+    <div id="piecetype">
+      <button id="btnX" type="button" class="btnplayer" onclick="pieceX()">X</button>
+      <button id="btnO" type="button" class="btnplayer" onclick="pieceO()">O </button>
+    </div>
+    <div id="areaJogo">
+        <table>
+          <tr>
+            <td><button id="btnAA" type="button" class="btnarea" onclick="play('A','A')"></button></td>
+            <td><button id="btnAB" type="button" class="btnarea" onclick="play('A','B')"></button></td>
+            <td><button id="btnAC" type="button" class="btnarea" onclick="play('A','C')"></button></td>
+          </tr>
+          <tr>
+            <td><button id="btnBA" type="button" class="btnarea"  onclick="play('B','A')"></button></td>
+            <td><button id="btnBB" type="button" class="btnarea"  onclick="play('B','B')"></button></td>
+            <td><button id="btnBC" type="button" class="btnarea"  onclick="play('B','C')"></button></td>
+          </tr>
+          <tr>
+            <td><button id="btnCA" type="button" class="btnarea"  onclick="play('C','A')"></button></td>
+            <td><button id="btnCB" type="button" class="btnarea" onclick="play('C','B')"></button></td>
+            <td><button id="btnCC" type="button" class="btnarea" onclick="play('C','C')"></button></td>
+          </tr>
+        </table>
+    </div>
+  
+  </div>
+  <div id="jogoacabadomax">
+    <div id="jogoacabado"></div>
+    <div id="botaoacabado">
+    <button id="btnRefresh" type="button" class="btnplayer" onclick="refrescarjogo()">Jogar Novamente</button>
+    </div>
+  </div>
+  <div id="divpontuacao">
+    <div id="pontuacaoX" class="pontuacaomostra"></div>
+    <div id="pontuacaoO" class="pontuacaomostra"></div>
+  </div>
+  <div id="divRefresh">
+    <button id="btnRefresh" type="button" class="btnplayer" onclick="refrescar()">Refrescar</button>
+  </div>
+
+ </div>
+</div>
+<script src="scriptsJogoGalo.js"></script>
+</body>
+</html>

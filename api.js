@@ -1,12 +1,30 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
 const upload = multer({ dest: 'uploads/' }); // Diretório de uploads
+//routes
+const profileRoutes = require('./routes/profileRoutes');
+const editProfileRoute = require('./routes/editProfileRoute.js');
+const fmInsertDataRoute = require('./routes/fmInsertDataRoute');
+const dashboardAdminRoute = require('./routes/dashboardAdminRoute');
+const aboutRoute = require('./routes/aboutRoute');
+const filmesRoute = require('./routes/filmesRoute');
+const fmHelperRoute = require('./routes/fmHelperRoute');
+const jogoGalo = require('./routes/jogoGaloRoute');
+
 const path = require('path');
 const connection = require('./db'); // Importe a conexão do arquivo db.js
 const app = express();
+
+// Habilitar o CORS
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true
+}));
 
 // Configuração do middleware de sessão
 app.use(session({
@@ -15,27 +33,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// Diretório de uploads
-const uploadDestination = './uploads/';
-if (!fs.existsSync(uploadDestination)) {
-  fs.mkdirSync(uploadDestination);
-}
+// Importe o middleware configurado para upload de arquivos
+const fileUpload = require('./multerConfig');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDestination);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const fileUpload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 } // Limite de 5MB
-}).single('avatar'); // 'avatar' é o nome do campo do formulário onde o arquivo será enviado
-
-// Usando o middleware de upload
+// Utilize o middleware para processar os uploads de arquivos
 app.post('/upload', (req, res) => {
   fileUpload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -73,123 +74,21 @@ app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "registo.html"));
 });
 
-app.get('/profile', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('profile', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin // Certifique-se de passar a propriedade isAdmin para o template
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-
-// Rota '/editProfile' também pode ser ajustada da mesma forma
-app.get('/editProfile', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('editProfile', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-// Rota '/editProfile' também pode ser ajustada da mesma forma
-app.get('/fmInsertData', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('fmInsertData', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-app.get('/dashboardAdmin', (req, res) => {
-  const user = req.session.user;
-
-  if (user && user.isAdmin === 1) { // Verifica se o usuário é um administrador
-    // Acesso aos detalhes do usuário na sessão, incluindo UtilizadorID
-    res.render('dashboardAdmin', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-// Rota '/editProfile' também pode ser ajustada da mesma forma
-app.get('/about', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('about', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-// Rota '/editProfile' também pode ser ajustada da mesma forma
-app.get('/filmes', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('filmes', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
-// Rota '/editProfile' também pode ser ajustada da mesma forma
-app.get('/fmHelper', (req, res) => {
-  const user = req.session.user;
-
-  if (user) {
-    res.render('fmHelper', {
-      UtilizadorID: user.UtilizadorID,
-      nome: user.Nome,
-      email: user.Email,
-      isAdmin: user.isAdmin
-    });
-  } else {
-    res.redirect('/');
-  }
-});
+//Routesssssssssss
+app.use(profileRoutes);
+app.use(editProfileRoute);
+app.use(fmInsertDataRoute);
+app.use(dashboardAdminRoute);
+app.use(aboutRoute);
+app.use(filmesRoute);
+app.use(fmHelperRoute);
+app.use(jogoGalo);
 
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
 });
 
-app.listen(3000, () => {
+app.listen(3000, '192.168.1.21', () => {
   console.log("Servidor rodando na porta 3000");
 });
 

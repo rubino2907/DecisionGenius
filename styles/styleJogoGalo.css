@@ -1,0 +1,141 @@
+#areaJogo{
+    display: none;
+    justify-content: center;
+  }
+  
+  body{
+    margin: 100px;
+    margin-top: 10px;
+  }
+  
+  .btnarea{
+    background-color: #202731;
+    border: 1px solid #7394FF;
+    color: #aeb3b9;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 4em;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+  .btnarea:hover{
+    background-color: #9aa0a8;
+    border: 1px solid #252d39;
+  }
+  button:disabled,
+  button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
+  
+  .btnplayer{
+    background-color: #202731;
+    border: 1px solid #7394FF;
+    color: #aeb3b9;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 1.5em;
+    width: 150px;
+  }
+  
+  .btnplayer:hover{
+    background-color: #9aa0a8;
+    border: 1px solid #252d39;
+  }
+  
+  .btnplayer:active {
+    background-color: #9aa0a8;
+    box-shadow: 0 5px #252d39;
+    transform: translateY(4px);
+    border: 1px solid #252d39;
+  }
+  #divpontuacao{
+    display: none;
+  }
+  #divRefresh{
+    margin-top:15px;
+      margin-bottom:auto;
+      text-align:center;
+  }
+  
+  #gametype{
+    display: flex;
+    justify-content: center;
+  }
+  
+  #jogoacabado{
+    width: 200px;
+    top: 100px;
+    background-color: #252d39;
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 2em;
+  }
+  #jogoacabadomax{
+    display:none;
+  }
+  #botaoacabado{
+    width: 200px;
+    top: 200px;
+    background-color: #252d39;
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+  }
+  #piecetype{
+    display:none;
+    justify-content: center;
+  }
+  .pontuacaomostra{
+    padding: 20px;
+    color: white;
+    margin: auto;
+  }
+  #tabuleiro{
+    width: 400px;
+    height: 350px;
+    margin-top: 200px;
+    background-color: #5e6674;
+    border-radius: 25px;
+    border: 1px solid #252d39;
+    margin: auto;
+    box-shadow: 5px 5px #4a5463;
+    margin-top: 50px; /* Espaçamento superior */
+  }
+  
+  #divpontuacao{
+    width: 400px;
+    height: 100px;
+    background-color: #5e6674;
+    border-radius: 25px;
+    border: 1px solid #252d39;
+    margin: auto;
+    box-shadow: 5px 5px #4a5463;
+  }
+  
+  td{
+    text-align:center;
+    cursor: pointer;
+  }
+  
+  .title{
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    margin: 50px;
+    font-weight: 900;
+    color: #aeb3b9;
+  }

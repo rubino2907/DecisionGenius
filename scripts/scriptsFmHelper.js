@@ -3,7 +3,7 @@ async function carregarLigas() {
   const selectElement = document.getElementById('ligas');
 
   try {
-    const response = await fetch('http://127.0.0.1:3000/ligas');
+    const response = await fetch('/ligas');
     const data = await response.json();
 
     selectElement.innerHTML = '<option value="">Selecione Liga</option>'; // Adiciona a opção "Selecione Liga" no início
@@ -56,7 +56,7 @@ window.onload = async () => {
     const selectedDivision = divisoesSelect.value;
     if (selectedDivision !== '') {
       try {
-        const response = await fetch(`http://127.0.0.1:3000/equipas/${selectedDivision}`);
+        const response = await fetch(`/equipas/${selectedDivision}`);
         const data = await response.json();
         displayTeams(data.equipas);
       } catch (error) {
@@ -70,7 +70,7 @@ window.onload = async () => {
     const selectedDivision = divisoesSelect.value;
     if (selectedDivision !== '') {
       try {
-        const response = await fetch(`http://127.0.0.1:3000/equipas/${selectedDivision}`);
+        const response = await fetch(`/equipas/${selectedDivision}`);
         const data = await response.json();
         const teams = data.equipas;
 
@@ -90,7 +90,7 @@ async function carregarDivisoes(idLiga) {
   const selectElement = document.getElementById('divisoes');
 
   try {
-    const response = await fetch(`http://127.0.0.1:3000/divisoes/${idLiga}`);
+    const response = await fetch(`/divisoes/${idLiga}`);
     const data = await response.json();
 
     selectElement.innerHTML = '<option value="">Selecione Divisão</option>'; // Adiciona a opção "Selecione Divisão" no início

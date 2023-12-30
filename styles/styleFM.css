@@ -323,4 +323,11 @@ button#randomMovieButton {
   display: none; /* Esconda o input do tipo file */
 }
 
+ /* Estilo para diminuir o tamanho da imagem e adicionar bordas arredondadas */
+ .profile-image img {
+  width: 100px; /* Largura desejada */
+  height: 100px; /* Altura desejada */
+  border-radius: 50%; /* Transforma a imagem em um círculo */
+}
+
 

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const ligaSelecionada = document.getElementById('ligas').value;
   
       try {
-        const response = await fetch('http://127.0.0.1:3000/inserirDivisao', {
+        const response = await fetch('/inserirDivisao', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectElement = document.getElementById('ligas');
   
     try {
-      const response = await fetch('http://127.0.0.1:3000/ligas');
+      const response = await fetch('/ligas');
       const data = await response.json();
   
       selectElement.innerHTML = ''; // Limpa o conteúdo do select
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectElement = document.getElementById('ligass');
   
     try {
-      const response = await fetch('http://127.0.0.1:3000/ligas');
+      const response = await fetch('/ligas');
       const data = await response.json();
   
       selectElement.innerHTML = ''; // Limpa o conteúdo do select
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectDivisoes = document.getElementById('divisoes');
   
     try {
-      const response = await fetch(`http://127.0.0.1:3000/divisoes/${idLiga}`);
+      const response = await fetch(`/divisoes/${idLiga}`);
       const data = await response.json();
   
       selectDivisoes.innerHTML = '<option value="">Selecione Divisão</option>'; // Adiciona a opção "Selecione Divisão" no início
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     formData.append('dinheiroTransferencias', dinheiroTransferencias);
 
     try {
-      const response = await fetch('http://127.0.0.1:3000/inserirDataClube', {
+      const response = await fetch('/inserirDataClube', {
         method: 'POST',
         body: formData
       });
@@ -194,8 +194,43 @@ window.onload = async () => {
   });
 
   carregarDados(); // Adicione esta linha para configurar o listener do formulário de inserção de divisões
+
+  fetch('/getUserDetails', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Detalhes do usuário recebidos:', data);
+
+    // Obtém o UtilizadorID do usuário
+    const userID = data.UtilizadorID;
+
+    // Chama a função para carregar a imagem do usuário usando o UtilizadorID
+    loadUserImage(userID);
+  })
+  .catch(error => {
+    console.error('Erro ao obter os detalhes do usuário:', error);
+  });
+  
 };
 
-
 });
+
+function loadUserImage(userID) {
+  fetch(`/getUserImage/${userID}`)
+    .then(response => response.json())
+    .then(data => {
+      let imagePath = data.imagePath;
+      imagePath = imagePath.replace(/\\/g, '/'); // Substituir barras invertidas por barras normais
+
+      const userImage = document.getElementById('userImage');
+      userImage.src = imagePath; // Define o caminho da imagem do usuário
+    })
+    .catch(error => {
+      console.error('Erro ao carregar a imagem:', error);
+    });
+}
 
