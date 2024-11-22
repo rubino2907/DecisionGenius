@@ -1,0 +1,58 @@
+#uploadArea {
+  border: 2px dashed #6200ea;
+  padding: 20px;
+  margin: 20px auto;
+  width: 60%;
+  text-align: center;
+  background-color: #e8eaf6;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#uploadArea:hover {
+  background-color: #d1c4e9;
+}
+
+#episodeList {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  width: 60%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+#episodeList li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#episodeList li:hover {
+  background-color: #f4f4f9;
+}
+
+#videoPlayer {
+  text-align: center;
+  margin: 20px auto;
+}
+
+#nextButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #6200ea;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#nextButton:hover {
+  background-color: #3700b3;
+}

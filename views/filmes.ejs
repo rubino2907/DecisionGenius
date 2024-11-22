@@ -32,8 +32,8 @@
 
 <!-- ... -->
 <main>
-  <label for="genre">Filtrar por gênero:</label>
-  <select id="genre">
+  <label for="genreMovies">Filtrar por gênero:</label>
+  <select id="genreMovies">
     <option value="all">Todos</option>
     <!-- Opções de gênero carregadas dinamicamente -->
   </select>
@@ -48,6 +48,17 @@
 </main>
 <!-- ... -->
 
+<div id="moviePopup" class="serie-popup">
+  <div class="serie-details-popup">
+    <h2 id="popupMovieTitle" class="popup-title"></h2>
+    <p id="popupMovieGenres" class="popup-genres"></p>
+    <p id="popupMovieOverview" class="popup-overview"></p>
+    <div id="youtubePlayer"></div>
+    <button id="closePopupButton" class="close-popup-button">Fechar</button>
+  </div>
+</div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="scripts.js"></script>
 </body>
 </html>

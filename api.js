@@ -16,6 +16,7 @@ const fmHelperRoute = require('./routes/fmHelperRoute');
 const jogoGalo = require('./routes/jogoGaloRoute');
 const jogoForca = require('./routes/jogoForcaRoute');
 const series = require('./routes/seriesRoute');
+const seeSeries = require('./routes/seeSeriesRoute');
 
 const path = require('path');
 const connection = require('./db'); // Importe a conexão do arquivo db.js
@@ -66,6 +67,7 @@ app.set('views', path.join(__dirname, 'views')); // Define o diretório 'views' 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "styles"))); // Servir arquivos estáticos na rota '/styles'
 app.use(express.static(path.join(__dirname, "scripts"))); // Servir arquivos estáticos na rota '/scripts'
+app.use(express.static(path.join(__dirname, "images"))); // Servir arquivos estáticos na rota '/images'
 app.use(express.urlencoded({ extended: true })); // Middleware para lidar com dados do formulário
 
 app.get("/", (req, res) => {
@@ -87,9 +89,10 @@ app.use(fmHelperRoute);
 app.use(jogoGalo);
 app.use(jogoForca);
 app.use(series);
+app.use(seeSeries);
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(3000, '192.168.1.21', () => {

@@ -451,3 +451,73 @@ label[for="avatar"]:hover {
   background-color: #4e4e4e;
 }
 
+/* Estilos para o popup */
+.serie-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.serie-details-popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%; /* Redução do tamanho do popup */
+  max-height: 80%; /* Redução do tamanho do popup */
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Centralizar trailer e botão fechar */
+}
+
+.popup-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.popup-genres {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #555;
+  text-align: center;
+}
+
+.popup-overview {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  text-align: justify;
+}
+
+#youtubePlayer {
+  width: 800px; /* Aumentar a largura do vídeo */
+  height: 500px; /* Altura do vídeo, ajuste conforme necessário */
+  margin-bottom: 20px;
+}
+
+.close-popup-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff6347;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.close-popup-button:hover {
+  background-color: #e03e2d;
+}
+
+

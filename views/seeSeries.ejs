@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Informações da Liga</title>
+  <title>Decide Genius - Ver Series</title>
   <!-- Adicione seu arquivo de estilos -->
-  <link rel="stylesheet" href="stylesFmHelper.css">
+  <link rel="stylesheet" href="/styleFM.css">
+  <link rel="stylesheet" href="/styleAssistirSeries.css">
 </head>
 <body>
   <nav>
@@ -32,27 +33,22 @@
     <h2>Explore informações sobre ligas esportivas e equipes!</h2>
   </header>
 
-  <main>
-    <h2>Escolha uma Liga</h2>
-    <select id="ligas">
-      <!-- Opções de liga -->
-    </select>
-    <select id="divisoes" name="divisoes">
-      <!-- Opções de divisão -->
-    </select>
-  
-    <section id="teams">
-      <h2>Equipes da Liga Selecionada</h2>
-      <div class="teams-container" id="teamsList">
-        <!-- Aqui é onde as equipes serão exibidas -->
-      </div>
-      <button id="randomTeamButton">Equipe Aleatória:</button>
-      <div id="randomTeamResult"></div>
-    </section>
-  </main>
-  
+  <div id="uploadArea">
+    <h3>Arraste e solte uma pasta com episódios aqui</h3>
+    <input type="file" id="fileInput" webkitdirectory multiple >
+    <p>Clique ou arraste a pasta para começar.</p>
+  </div>
 
-  <!-- Importe seu arquivo de script corretamente -->
-  <script src="scriptsFmHelper.js"></script>
+  <ul id="episodeList"></ul>
+
+  <div id="videoPlayer">
+    <video id="video" width="640" height="360" controls>
+      Seu navegador não suporta a tag de vídeo.
+    </video>
+  </div>
+
+  <button id="nextButton">Próximo Episódio</button>
+
+  <script src="scriptsSeeFilms.js"></script>
 </body>
 </html>
